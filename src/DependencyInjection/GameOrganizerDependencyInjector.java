@@ -1,4 +1,4 @@
-package TestTurboNGServer;
+package DependencyInjection;
 
 import TurboNGServer.Game.Game;
 import dagger.Module;

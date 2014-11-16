@@ -1,13 +1,11 @@
-package TestTurboNGServer;
+package DependencyInjection;
 
+import Chesse.ChessPlayer;
 import TurboNGServer.Interface.LobbyInterface;
 import TurboNGServer.Lobby.NewsFeed;
 import TurboNGServer.Lobby.Player;
 import dagger.Module;
 import dagger.Provides;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 
 /**
  * Created by ruijorgeclarateixeira on 15/10/14.
@@ -19,7 +17,7 @@ import java.io.BufferedWriter;
 public class LobbyDependencyInjector {
     @Provides
     Player provideUser() {
-        return new TestPlayer();
+        return new ChessPlayer();
     }
 
     @Provides

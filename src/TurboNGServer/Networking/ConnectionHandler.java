@@ -1,6 +1,6 @@
 package TurboNGServer.Networking;
 
-import TestTurboNGServer.LobbyDependencyInjector;
+import DependencyInjection.LobbyDependencyInjector;
 import TurboNGServer.Interface.LobbyInterface;
 import dagger.ObjectGraph;
 
