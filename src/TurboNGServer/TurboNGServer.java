@@ -4,7 +4,8 @@ import TurboNGServer.Networking.ConnectionHandler;
 import TurboNGServer.Networking.TurboNGServerSocketFactory;
 import TurboNGServer.ServerSettings.ServerVariables;
 
-import javax.net.ssl.SSLServerSocket;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.concurrent.Executors;
 
 /**
@@ -13,7 +14,7 @@ import java.util.concurrent.Executors;
  * It starts a ConnectionHandler that will receive the incoming connections
  */
 public class TurboNGServer {
-    SSLServerSocket serverSocket;
+    ServerSocket serverSocket;
     int port;
     int numberOfThreads;
     boolean sslConnection;
@@ -46,6 +47,8 @@ public class TurboNGServer {
         } catch (RuntimeException e) {
             ServerVariables.errorLogger.severe("Uncaught exception! Server will stop!"
                     + "\nException Message" +  e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

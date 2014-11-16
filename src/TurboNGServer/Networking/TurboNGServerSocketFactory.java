@@ -7,6 +7,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.Arrays;
@@ -23,8 +25,7 @@ public class TurboNGServerSocketFactory {
      * @param authenticationRequired - If true the socket will only allow cipher suites with authentication
      * @return - Returns the created socket or null if a problem is found
      */
-    public static SSLServerSocket createNGServerSocket(int port, boolean authenticationRequired) {
-        SSLServerSocket newSocket = null;
+    public static ServerSocket createNGServerSocket(int port, boolean authenticationRequired) throws IOException {
         SSLServerSocketFactory factory;
         try {
             if (authenticationRequired) {
@@ -41,14 +42,15 @@ public class TurboNGServerSocketFactory {
                 Arrays.fill(password, '0'); // Wipe the password
 
                 factory = context.getServerSocketFactory();
-                newSocket =  (SSLServerSocket) factory.createServerSocket(port);
+                return factory.createServerSocket(port);
+            }
+            else {
+                return new ServerSocket(port);
             }
         } catch (NoSuchAlgorithmException | UnrecoverableKeyException | KeyManagementException | KeyStoreException | CertificateException e) {
             e.printStackTrace();
-        } finally {
-            return newSocket;
         }
+
+        return null;
     }
-
-
 }

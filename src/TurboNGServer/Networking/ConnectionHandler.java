@@ -7,6 +7,8 @@ import dagger.ObjectGraph;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLSocket;
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -20,10 +22,10 @@ import java.util.concurrent.ExecutorService;
  */
 public class ConnectionHandler {
     public static boolean serverRunning = true;
-    public static void start(ExecutorService pool, SSLServerSocket serverSocket) {
+    public static void start(ExecutorService pool, ServerSocket serverSocket) {
         while(serverRunning) {
             try {
-                SSLSocket clientSocket = (SSLSocket) serverSocket.accept(); // BLOCKS EXECUTION
+                Socket clientSocket = serverSocket.accept(); // BLOCKS EXECUTION
                 BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
                 ObjectGraph objectGraph = ObjectGraph.create(new LobbyDependencyInjector());
@@ -33,6 +35,7 @@ public class ConnectionHandler {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (RuntimeException e) {
+                e.printStackTrace();
                 System.err.println("Unidentified exception. TurboNGServer.Networking.ConnectionHandler will continue.");
             }
         }
