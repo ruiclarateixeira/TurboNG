@@ -1,6 +1,7 @@
 package TurboNGServer.Lobby;
 
 import TurboNGServer.Game.Game;
+import TurboNGServer.Interface.LobbyInterface;
 import TurboNGServer.Interface.Message;
 
 /**
@@ -10,6 +11,7 @@ import TurboNGServer.Interface.Message;
 */
 public abstract class Player {
     public String username = null;
+    public LobbyInterface lobbyInterface = null;
 
     public abstract String executeAction(Message message);
     public abstract String invite(Game game);
@@ -19,5 +21,18 @@ public abstract class Player {
         if(username != null) {
             PlayersManager.onlinePLayers.put(username, this);
         }
+    }
+
+    public void setLobbyInterface(LobbyInterface gLobbyInterface) {
+        this.lobbyInterface = gLobbyInterface;
+    }
+
+    public void sendMessage(String message) {
+        lobbyInterface.sendMessage(message);
+    }
+
+    public void sendMessageTo(String username, String message) {
+        if(PlayersManager.onlinePLayers.get(username) != null)
+            PlayersManager.onlinePLayers.get(username).sendMessage(message);
     }
 }

@@ -32,6 +32,7 @@ public class LobbyInterface implements Callable<Void> {
      */
     @Override
     public Void call() {
+        player.setLobbyInterface(this);
         while (true) {
             try {
                 String input = bufReader.readLine();
