@@ -1,7 +1,7 @@
 package TurboNGServer.Interface;
 
-import libraries.json.JSONObject;
-import libraries.json.JSONException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by ruijorgeclarateixeira on 03/10/14.

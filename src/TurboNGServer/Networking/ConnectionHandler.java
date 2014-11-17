@@ -4,8 +4,6 @@ import DependencyInjection.LobbyDependencyInjector;
 import TurboNGServer.Interface.LobbyInterface;
 import dagger.ObjectGraph;
 
-import javax.net.ssl.SSLServerSocket;
-import javax.net.ssl.SSLSocket;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -28,7 +26,8 @@ public class ConnectionHandler {
                 Socket clientSocket = serverSocket.accept(); // BLOCKS EXECUTION
                 BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-                ObjectGraph objectGraph = ObjectGraph.create(new LobbyDependencyInjector());
+                ObjectGraph objectGraph;
+                objectGraph = ObjectGraph.create(new LobbyDependencyInjector());
                 LobbyInterface lobbyInterface = objectGraph.get(LobbyInterface.class);
                 lobbyInterface.setReaderAndWriter(reader, writer);
                 pool.submit(lobbyInterface);
