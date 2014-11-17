@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="com.squareup.dagger:dagger-compiler:1.2.2" type="repository">
+    <properties maven-id="com.squareup.dagger:dagger-compiler:1.2.2" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/squareup/dagger/dagger-compiler/1.2.2/dagger-compiler-1.2.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/squareup/dagger/dagger/1.2.2/dagger-1.2.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/javax/inject/javax.inject/1/javax.inject-1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/squareup/javawriter/2.5.0/javawriter-2.5.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/15.0/guava-15.0.jar!/" />
+      <root url="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
