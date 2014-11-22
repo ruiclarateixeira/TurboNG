@@ -7,30 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/src/libraries" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/src" />
-        </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/src/libraries" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$APPLICATION_HOME_DIR$/lib/groovy-all-2.2.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="com.squareup.dagger:dagger:1.2.2" level="project" />
-    <orderEntry type="library" name="com.squareup.dagger:dagger-compiler:1.2.2" level="project" />
-    <orderEntry type="library" name="org.json:json:20140107" level="project" />
+    <orderEntry type="library" name="libraries" level="project" />
   </component>
 </module>
 

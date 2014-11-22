@@ -1,0 +1,33 @@
+<project>
+    
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+    
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes">
+            <classpath>
+                <pathelement path="libraries/json-20140107.jar"/>
+                <pathelement path="libraries/dagger-1.2.2.jar"/>
+                <pathelement path="libraries/dagger-compiler-1.2.2.jar"/>
+                <pathelement path="libraries/javax.inject.jar"/>
+                <pathelement path="libraries/javawriter-2.5.0.jar"/>
+            </classpath>
+        </javac>
+    </target>
+    
+    <target name="jar">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/TurboNG.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="Chesse.Main"/>
+            </manifest>
+            <zipgroupfileset dir="libraries" includes="**/*.jar"/>
+        </jar>
+    </target>
+    
+    <target name="chesse" depends="jar">
+        <java jar="build/jar/TurboNG.jar" fork="true"/>
+    </target>
+</project>
