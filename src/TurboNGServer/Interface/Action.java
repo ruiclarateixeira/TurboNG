@@ -8,7 +8,7 @@ import org.json.JSONObject;
  * This class holds a Json Object and performs all the operations on it
  * It only receives and returns Strings to be used as abstraction of the used Json API
  */
-public class Message {
+public class Action {
     private JSONObject jsonMessage = null;
 
     /**
@@ -26,7 +26,7 @@ public class Message {
      * Parses a string representing a json object into and JsonObject
      * @param strJsonInput String representing a json object
      */
-    public Message(String strJsonInput) {
+    public Action(String strJsonInput) {
         try {
             jsonMessage = new JSONObject(strJsonInput);
         }

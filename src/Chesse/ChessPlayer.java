@@ -1,12 +1,14 @@
 package Chesse;
 
 import TurboNGServer.Game.Game;
-import TurboNGServer.Interface.Message;
+import TurboNGServer.Interface.Action;
 import TurboNGServer.Lobby.Player;
 import TurboNGServer.ServerSettings.ServerResponses;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by ruijorgeclarateixeira on 16/11/14.
+ * A Chess Player.
  */
 
 public class ChessPlayer extends Player{
@@ -15,24 +17,32 @@ public class ChessPlayer extends Player{
     }
 
     @Override
-    public String executeAction(Message message) {
-        if(!message.isValid()) {
-            return ServerResponses.ERROR_102_ILLEGAL_FORMAT;
+    public void executeAction(Action action) {
+        if(!action.isValid()) {
+            sendToClient(new Action(ServerResponses.ERROR_102_ILLEGAL_FORMAT));
         }
 
-        if(message.getValueOf("action").equals("login")) {
-            if(message.getValueOf("username") != null) {
-                username = message.getValueOf("username");
-                addToOnlinePlayers();
-                return "{action:response, type:success, username: " + username + "}";
-            }
+        switch (action.getValueOf("action")) {
+            case  ("login"):
+                if (action.getValueOf("username") != null) {
+                    username = action.getValueOf("username");
+                    addToOnlinePlayers();
+                    sendToClient(new Action("{action:loginSuccessful}"));
+                }
+                break;
+            case ("invite"):
+                throw new NotImplementedException();
+            case ("chat"):
+                if(action.getValueOf("target") != null) {
+                    sendMessageTo(action.getValueOf("target"), action.getValueOf("message"));
+                }
+                break;
+            case ("exit"):
+                
+                break;
+            default:
+                sendToClient(new Action(ServerResponses.ERROR_101_ACTION_NOT_FOUND));
         }
-        else if(message.getValueOf("action").equals("invite")) {
-            if(message.getValueOf("target") != null) {
-                sendMessageTo(message.getValueOf("target"), "{action:invite, source:" + username + "}");
-            }
-        }
-        return ServerResponses.ERROR_101_ACTION_NOT_FOUND;
     }
 
     @Override
@@ -47,6 +57,11 @@ public class ChessPlayer extends Player{
 
     @Override
     public void disconnect() {
+
+    }
+
+    @Override
+    public void chatMessage(String source, String message) {
 
     }
 }

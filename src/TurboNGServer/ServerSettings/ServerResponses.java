@@ -3,12 +3,12 @@ package TurboNGServer.ServerSettings;
 /**
  * Created by ruijorgeclarateixeira on 04/10/14.
  *
- * This class holds the content of the standard messages sent
+ * This class holds the content of the standard actions sent
  * to the user.
  */
 public class ServerResponses {
     /**
-     * General messages
+     * General actions
      */
     public static final String ERROR_100_ACTION_TYPE_NOT_FOUND =  "{ type: response, "
                                                             + "action: error, "

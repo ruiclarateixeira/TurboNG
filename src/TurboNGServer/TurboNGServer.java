@@ -46,7 +46,7 @@ public class TurboNGServer {
             System.out.println("Server is running.");
         } catch (RuntimeException e) {
             ServerVariables.errorLogger.severe("Uncaught exception! Server will stop!"
-                    + "\nException Message" +  e.getMessage());
+                    + "\nException Action" +  e.getMessage());
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();

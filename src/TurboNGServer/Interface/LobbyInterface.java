@@ -3,6 +3,7 @@ package TurboNGServer.Interface;
 import TurboNGServer.Lobby.NewsFeed;
 import TurboNGServer.Lobby.Player;
 import TurboNGServer.ServerSettings.ServerResponses;
+import TurboNGServer.ServerSettings.ServerVariables;
 
 import javax.inject.Inject;
 import java.io.BufferedReader;
@@ -42,12 +43,12 @@ public class LobbyInterface implements Callable<Void> {
                     return null; // Stop execution
                 }
 
-                Message inputMessage = new Message(input);
+                Action inputMessage = new Action(input);
                 if(inputMessage.isValid()) {
-                    sendMessage(player.executeAction(inputMessage));
+                    player.executeAction(inputMessage);
                 }
                 else {
-                    sendMessage(ServerResponses.ERROR_102_ILLEGAL_FORMAT);
+                    sendToClient(new Action(ServerResponses.ERROR_102_ILLEGAL_FORMAT));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -57,13 +58,15 @@ public class LobbyInterface implements Callable<Void> {
 
     /**
      * Send a message to the client.
-     * @param message Message to be sent.
+     * @param action Action to be sent.
      */
-    public void sendMessage(String message) {
+    public void sendToClient(Action action) {
         try {
-            bufWriter.write(message);
-            bufWriter.newLine();
-            bufWriter.flush();
+            if(action.isValid()) {
+                bufWriter.write(action.toString());
+                bufWriter.newLine();
+                bufWriter.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
