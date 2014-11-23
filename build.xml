@@ -16,7 +16,7 @@
         </javac>
     </target>
     
-    <target name="jar">
+    <target name="jar-chess-e">
         <mkdir dir="build/jar"/>
         <jar destfile="build/jar/TurboNG.jar" basedir="build/classes">
             <manifest>
@@ -26,7 +26,7 @@
         </jar>
     </target>
     
-    <target name="chesse" depends="jar">
-        <java jar="build/jar/TurboNG.jar" fork="true"/>
+    <target name="chesse" depends="jar-chess-e">
+        <java jar="build/jar/Chess_e.v.1.0.jar" fork="true"/>
     </target>
 </project>
