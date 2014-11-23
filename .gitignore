@@ -17,3 +17,4 @@ hs_err_pid*
 # ignore all output files
 out/*
 target/*
+build/*

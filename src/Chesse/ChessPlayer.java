@@ -44,4 +44,9 @@ public class ChessPlayer extends Player{
     public String getAction() {
         return null;
     }
+
+    @Override
+    public void disconnect() {
+
+    }
 }

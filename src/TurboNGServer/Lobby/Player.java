@@ -16,6 +16,7 @@ public abstract class Player {
     public abstract String executeAction(Message message);
     public abstract String invite(Game game);
     public abstract String getAction();
+    public abstract void disconnect();
 
     public void addToOnlinePlayers() {
         if(username != null) {

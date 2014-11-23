@@ -36,6 +36,12 @@ public class LobbyInterface implements Callable<Void> {
         while (true) {
             try {
                 String input = bufReader.readLine();
+
+                if(input == null) {
+                    player.disconnect();
+                    return null; // Stop execution
+                }
+
                 Message inputMessage = new Message(input);
                 if(inputMessage.isValid()) {
                     sendMessage(player.executeAction(inputMessage));
