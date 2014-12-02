@@ -1,4 +1,4 @@
-package DependencyInjection;
+package TurboNGServerTests.DependencyInjection;
 
 import Chesse.ChessPlayer;
 import TurboNGServer.Interface.LobbyInterface;
@@ -8,17 +8,15 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by ruijorgeclarateixeira on 15/10/14.
- * Dependency injector Modules
+ * Created by ruijorgeclarateixeira on 02/12/14.
  */
-/*
-@Module (
+@Module(
         injects = LobbyInterface.class
 )
-public class LobbyDependencyInjector {
+public class LobbyInterfaceDITest {
     @Provides
-    Player provideUser() {
-        return new ChessPlayer();
+    Player providePlayer() {
+        return new TestPlayer();
     }
 
     @Provides
@@ -26,5 +24,3 @@ public class LobbyDependencyInjector {
         return null;
     }
 }
-
-*/

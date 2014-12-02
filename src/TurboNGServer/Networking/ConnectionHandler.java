@@ -20,17 +20,22 @@ import java.util.concurrent.ExecutorService;
  */
 public class ConnectionHandler {
     public static boolean serverRunning = true;
+
+    public static LobbyInterface createLobbyInterface(InputStream in, OutputStream out) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+        ObjectGraph objectGraph;
+        objectGraph = ObjectGraph.create(new LobbyDependencyInjector());
+        LobbyInterface lobbyInterface = objectGraph.get(LobbyInterface.class);
+        lobbyInterface.setReaderAndWriter(reader, writer);
+        return lobbyInterface;
+    }
+
     public static void start(ExecutorService pool, ServerSocket serverSocket) {
         while(serverRunning) {
             try {
                 Socket clientSocket = serverSocket.accept(); // BLOCKS EXECUTION
-                BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-                ObjectGraph objectGraph;
-                objectGraph = ObjectGraph.create(new LobbyDependencyInjector());
-                LobbyInterface lobbyInterface = objectGraph.get(LobbyInterface.class);
-                lobbyInterface.setReaderAndWriter(reader, writer);
-                pool.submit(lobbyInterface);
+                pool.submit(createLobbyInterface(clientSocket.getInputStream(), clientSocket.getOutputStream()));
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (RuntimeException e) {

@@ -3,8 +3,11 @@ package Chesse;
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
 import TurboNGServer.Lobby.Player;
+import TurboNGServer.Lobby.PlayersManager;
 import TurboNGServer.ServerSettings.ServerResponses;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.util.Iterator;
 
 /**
  * Created by ruijorgeclarateixeira on 16/11/14.
@@ -30,15 +33,15 @@ public class ChessPlayer extends Player{
                     sendToClient(new Action("{action:loginSuccessful}"));
                 }
                 break;
-            case ("invite"):
-                throw new NotImplementedException();
+            case ("userList"):
+                break;
             case ("chat"):
                 if(action.getValueOf("target") != null) {
                     sendMessageTo(action.getValueOf("target"), action.getValueOf("message"));
                 }
                 break;
             case ("exit"):
-                
+
                 break;
             default:
                 sendToClient(new Action(ServerResponses.ERROR_101_ACTION_NOT_FOUND));
