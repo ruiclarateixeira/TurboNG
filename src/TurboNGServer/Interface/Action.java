@@ -22,6 +22,7 @@ public class Action {
         }
         catch (JSONException e) {
             jsonMessage = null;
+            e.printStackTrace();
         }
     }
 

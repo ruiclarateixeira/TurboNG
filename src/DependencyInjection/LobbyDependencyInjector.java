@@ -1,6 +1,6 @@
 package DependencyInjection;
 
-import Chesse.ChessPlayer;
+import IntegrationTesting.TestPlayer;
 import TurboNGServer.Player.PlayerLobby;
 import TurboNGServer.Player.Player;
 import dagger.Module;
@@ -18,7 +18,7 @@ import dagger.Provides;
 public class LobbyDependencyInjector {
     @Provides
     Player provideUser() {
-        return new ChessPlayer();
+        return new TestPlayer();
     }
 }
 

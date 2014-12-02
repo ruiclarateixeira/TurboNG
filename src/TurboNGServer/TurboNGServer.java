@@ -35,7 +35,7 @@ public class TurboNGServer {
     boolean sslConnection;
 
     /**
-     * Main Constructor
+     * TestMain Constructor
      * @param port Port that server socket listens from.
      * @param numberOfThreads Size of the thread pool.
      * @param sslConnection True if the socket should use SSL security. False otherwise.

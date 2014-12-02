@@ -20,7 +20,7 @@
         <mkdir dir="build/jar"/>
         <jar destfile="build/jar/TurboNG.jar" basedir="build/classes">
             <manifest>
-                <attribute name="Main-Class" value="Chesse.Main"/>
+                <attribute name="Main-Class" value="IntegrationTesting.TestMain"/>
             </manifest>
             <zipgroupfileset dir="libraries" includes="**/*.jar"/>
         </jar>

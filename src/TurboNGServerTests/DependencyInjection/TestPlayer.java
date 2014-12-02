@@ -14,7 +14,8 @@ public class TestPlayer extends Player {
     }
 
     @Override
-    public void invite(Game game) {
+    public void invite(Game game, String source) {
+
     }
 
     @Override
@@ -25,6 +26,11 @@ public class TestPlayer extends Player {
     @Override
     public void disconnect() {
 
+    }
+
+    @Override
+    public Game initGame() {
+        return null;
     }
 
     @Override

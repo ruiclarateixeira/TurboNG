@@ -1,5 +1,6 @@
 package TurboNGServer.Game;
 
+import TurboNGServer.Interface.Action;
 import TurboNGServer.Player.Player;
 
 import java.util.ArrayList;
@@ -9,11 +10,12 @@ import java.util.ArrayList;
  */
 public abstract class Game {
     private boolean finished = false;
-    private ArrayList<Player> players = new ArrayList<>();
+    public ArrayList<Player> players = new ArrayList<>();
 
-    public abstract String addPlayer(Player player);
-    public abstract String acceptInvite(Player player);
-    public abstract void invite(String username);
+    public abstract Game createGame();
+
+    public abstract void addPlayer(Player player);
+    public abstract void invite(String source, String target);
 
     public abstract void preRoundActions();
     public abstract void postRoundActions();
@@ -22,14 +24,15 @@ public abstract class Game {
 
     public void startGame() {
         finished = false;
-        while(!finished) {
-            preRoundActions();
+        //while(!finished) {
+            //preRoundActions();
             for(Player player : players) {
-                preTurnActions(player);
-                player.getAction();
-                postTurnActions(player);
+                player.sendToClient(new Action("{action:login}"));
+                //preTurnActions(player);
+                //player.getAction();
+                //postTurnActions(player);
             }
-            postRoundActions();
-        }
+            //postRoundActions();
+        //}
     }
 }

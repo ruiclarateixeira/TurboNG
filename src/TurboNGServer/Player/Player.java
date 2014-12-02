@@ -20,6 +20,11 @@ public abstract class Player {
     public PlayerLobby playerLobby = null;
 
     /**
+     * Game that the user is currently in. Null if not in any game.
+     */
+    public Game game = null;
+
+    /**
      * Received action to execute.
      * @param action Action o execute.
      */
@@ -28,8 +33,9 @@ public abstract class Player {
     /**
      * Received invitation for a game
      * @param game Game to join or decline.
+     * @param source Username of the player that invited.
      */
-    public abstract void invite(Game game);
+    public abstract void invite(Game game, String source);
 
     /**
      * Used in game. Order to get action from user received.
@@ -41,6 +47,11 @@ public abstract class Player {
      * Order to disconnect received.
      */
     public abstract void disconnect();
+
+    /**
+     * Instantiate a game. This should instantiate an implementation of game.
+     */
+    public abstract Game initGame();
 
     /**
      * Chat message received.
@@ -90,5 +101,33 @@ public abstract class Player {
     public void sendMessageTo(String username, String message) {
         if(PlayersManager.getPlayer(username).username != null)
             PlayersManager.getPlayer(username).chatMessage(this.username, message);
+    }
+
+    /**
+     * Invite another player to the game this is currently in.
+     * @param target Username of the player to invite.
+     */
+    public void inviteToGame(String target) {
+        if(this.game != null)
+            this.game.invite(this.username, target);
+    }
+
+    /**
+     * Join given game if not already in game.
+     * @param g Game to join.
+     */
+    public void joinGame(Game g) {
+        if(this.game == null)
+            g.addPlayer(this);
+    }
+
+    /**
+     * Create a game and join it if this player is not another game.
+     */
+    public void createGame() {
+        if(this.game == null) {
+            this.game = initGame();
+            joinGame(this.game);
+        }
     }
 }

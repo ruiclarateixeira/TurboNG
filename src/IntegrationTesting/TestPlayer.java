@@ -1,4 +1,4 @@
-package Chesse;
+package IntegrationTesting;
 
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
@@ -10,9 +10,8 @@ import TurboNGServer.ServerSettings.ServerResponses;
  * A Chess Player.
  */
 
-public class ChessPlayer extends Player{
-
-    public ChessPlayer() {
+public class TestPlayer extends Player{
+    public TestPlayer() {
     }
 
     @Override
@@ -23,21 +22,22 @@ public class ChessPlayer extends Player{
 
         switch (action.getValueOf("action")) {
             case  ("login"):
+                System.out.println("Login");
                 if (action.getValueOf("username") != null) {
                     username = action.getValueOf("username");
                     addToOnlinePlayers();
                     sendToClient(new Action("{action:loginSuccessful}"));
                 }
                 break;
-            case ("userList"):
+            case ("createGame"):
+                System.out.println("createGame");
+                createGame();
                 break;
-            case ("chat"):
+            case ("invite"):
+                System.out.println("Invite");
                 if(action.getValueOf("target") != null) {
-                    sendMessageTo(action.getValueOf("target"), action.getValueOf("message"));
+                   inviteToGame(action.getValueOf("target"));
                 }
-                break;
-            case ("exit"):
-
                 break;
             default:
                 sendToClient(new Action(ServerResponses.ERROR_101_ACTION_NOT_FOUND));
@@ -45,8 +45,8 @@ public class ChessPlayer extends Player{
     }
 
     @Override
-    public void invite(Game game) {
-
+    public void invite(Game game, String source) {
+        sendToClient(new Action("{action:invite, source: " + source + "}"));
     }
 
     @Override
@@ -57,6 +57,11 @@ public class ChessPlayer extends Player{
     @Override
     public void disconnect() {
 
+    }
+
+    @Override
+    public Game initGame() {
+        return new TestGame();
     }
 
     @Override
