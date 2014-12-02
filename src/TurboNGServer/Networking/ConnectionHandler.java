@@ -1,7 +1,7 @@
 package TurboNGServer.Networking;
 
 import DependencyInjection.LobbyDependencyInjector;
-import TurboNGServer.Interface.LobbyInterface;
+import TurboNGServer.Player.PlayerLobby;
 import dagger.ObjectGraph;
 
 import java.io.*;
@@ -19,28 +19,38 @@ import java.util.concurrent.ExecutorService;
  * thread pool.
  */
 public class ConnectionHandler {
+    /**
+     * Current state of the server.
+     */
     public static boolean serverRunning = true;
 
-    public static LobbyInterface createLobbyInterface(InputStream in, OutputStream out) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+    /**
+     * Accesses dependency injection graph to instantiate lobby interface.
+     * @return Instantiated lobby interface with injected variables.
+     */
+    public static PlayerLobby initLobbyInterface() {
         ObjectGraph objectGraph;
         objectGraph = ObjectGraph.create(new LobbyDependencyInjector());
-        LobbyInterface lobbyInterface = objectGraph.get(LobbyInterface.class);
-        lobbyInterface.setReaderAndWriter(reader, writer);
-        return lobbyInterface;
+        return objectGraph.get(PlayerLobby.class);
     }
 
+    /**
+     * Starts the connection handler.
+     * @param pool Pool of threads.
+     * @param serverSocket Socket the connection handler listens to.
+     */
     public static void start(ExecutorService pool, ServerSocket serverSocket) {
         while(serverRunning) {
             try {
                 Socket clientSocket = serverSocket.accept(); // BLOCKS EXECUTION
-                pool.submit(createLobbyInterface(clientSocket.getInputStream(), clientSocket.getOutputStream()));
+                PlayerLobby playerLobby = initLobbyInterface();
+                playerLobby.listen(clientSocket);
+                pool.submit(playerLobby);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (RuntimeException e) {
                 e.printStackTrace();
-                System.err.println("Unidentified exception. TurboNGServer.Networking.ConnectionHandler will continue.");
+                System.err.println("Unidentified exception in TurboNGServer.Networking.ConnectionHandler. Process will continue.");
             }
         }
     }

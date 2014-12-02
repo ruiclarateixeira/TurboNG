@@ -1,10 +1,7 @@
 package TurboNGServer.Networking;
 
-import TurboNGServer.ServerSettings.ServerVariables;
-
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,9 +15,19 @@ import java.util.Arrays;
  *
  */
 public class TurboNGServerSocketFactory {
+    /**
+     * Algorithm used when secure socket is required. Hardcoded as SSL.
+     */
     private final static String algorithm = "SSL";
+
+    /**
+     * Path to the ssl keys.
+     */
+    private final static String sslKeysPath = "/Users/ruijorgeclarateixeira/Development/TurboNGServer/sslkeys/turbong.keys";
+
     /**
      * Creates a SSLServerSocket
+     * NOTE: This contains hardcoded data. Needs work.
      * @param port - Port in which the socket should listen
      * @param authenticationRequired - If true the socket will only allow cipher suites with authentication
      * @return - Returns the created socket or null if a problem is found
@@ -35,7 +42,7 @@ public class TurboNGServerSocketFactory {
 
                 KeyStore ks = KeyStore.getInstance("JKS");
                 char[] password = "13ncldm1p".toCharArray(); // TESTING ONLY
-                ks.load(new FileInputStream(ServerVariables.PUBLIC_KEYS_PATH), password);
+                ks.load(new FileInputStream(sslKeysPath), password);
                 kmf.init(ks, password);
                 context.init(kmf.getKeyManagers(), null, null);
 

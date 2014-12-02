@@ -2,12 +2,8 @@ package Chesse;
 
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
-import TurboNGServer.Lobby.Player;
-import TurboNGServer.Lobby.PlayersManager;
+import TurboNGServer.Player.Player;
 import TurboNGServer.ServerSettings.ServerResponses;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.util.Iterator;
 
 /**
  * Created by ruijorgeclarateixeira on 16/11/14.
@@ -49,12 +45,12 @@ public class ChessPlayer extends Player{
     }
 
     @Override
-    public String invite(Game game) {
-        return null;
+    public void invite(Game game) {
+
     }
 
     @Override
-    public String getAction() {
+    public Action getAction() {
         return null;
     }
 

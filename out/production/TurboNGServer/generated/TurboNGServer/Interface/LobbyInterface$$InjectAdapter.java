@@ -22,8 +22,7 @@ import javax.inject.Provider;
  */
 public final class LobbyInterface$$InjectAdapter extends Binding<LobbyInterface>
     implements Provider<LobbyInterface>, MembersInjector<LobbyInterface> {
-  private Binding<TurboNGServer.Lobby.Player> player;
-  private Binding<TurboNGServer.Lobby.NewsFeed> newsFeed;
+  private Binding<TurboNGServer.Player.Player> player;
 
   public LobbyInterface$$InjectAdapter() {
     super("TurboNGServer.Interface.LobbyInterface", "members/TurboNGServer.Interface.LobbyInterface", NOT_SINGLETON, LobbyInterface.class);
@@ -36,8 +35,7 @@ public final class LobbyInterface$$InjectAdapter extends Binding<LobbyInterface>
   @Override
   @SuppressWarnings("unchecked")
   public void attach(Linker linker) {
-    player = (Binding<TurboNGServer.Lobby.Player>) linker.requestBinding("TurboNGServer.Lobby.Player", LobbyInterface.class, getClass().getClassLoader());
-    newsFeed = (Binding<TurboNGServer.Lobby.NewsFeed>) linker.requestBinding("TurboNGServer.Lobby.NewsFeed", LobbyInterface.class, getClass().getClassLoader());
+    player = (Binding<TurboNGServer.Player.Player>) linker.requestBinding("TurboNGServer.Player.Player", LobbyInterface.class, getClass().getClassLoader());
   }
 
   /**
@@ -47,7 +45,6 @@ public final class LobbyInterface$$InjectAdapter extends Binding<LobbyInterface>
   @Override
   public void getDependencies(Set<Binding<?>> getBindings, Set<Binding<?>> injectMembersBindings) {
     injectMembersBindings.add(player);
-    injectMembersBindings.add(newsFeed);
   }
 
   /**
@@ -68,7 +65,6 @@ public final class LobbyInterface$$InjectAdapter extends Binding<LobbyInterface>
   @Override
   public void injectMembers(LobbyInterface object) {
     object.player = player.get();
-    object.newsFeed = newsFeed.get();
   }
 
 }

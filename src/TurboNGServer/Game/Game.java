@@ -1,7 +1,6 @@
 package TurboNGServer.Game;
 
-import TurboNGServer.Lobby.Player;
-import TurboNGServer.Lobby.PlayersManager;
+import TurboNGServer.Player.Player;
 
 import java.util.ArrayList;
 

@@ -10,11 +10,6 @@ public class ServerResponses {
     /**
      * General actions
      */
-    public static final String ERROR_100_ACTION_TYPE_NOT_FOUND =  "{ type: response, "
-                                                            + "action: error, "
-                                                            + "code: 100, "
-                                                            + "message: Type not found }";
-
     public static final String ERROR_101_ACTION_NOT_FOUND =  "{ type: response, "
                                                             + "action: error, "
                                                             + "code: 101, "
@@ -24,9 +19,4 @@ public class ServerResponses {
                                                             + "action: error, "
                                                             + "code: 102, "
                                                             + "message: Illegal Format }";
-
-    public static final String ERROR_103_WRONG_PARAMETERS =  "{ type: response, "
-                                                            + "action: error, "
-                                                            + "code: 103, "
-                                                            + "message: Wrong Parameters }";
 }
