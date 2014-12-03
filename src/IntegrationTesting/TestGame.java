@@ -2,6 +2,7 @@ package IntegrationTesting;
 
 import TurboNGServer.Game.Game;
 import TurboNGServer.Player.Player;
+import TurboNGServer.Player.PlayersManager;
 
 /**
  * Created by ruijorgeclarateixeira on 02/12/14.
@@ -19,12 +20,18 @@ public class TestGame extends Game {
     }
 
     @Override
-    public void addPlayer(Player player) {
+    public void join(Player player) {
+        System.out.println("Player Joined! " + player.username);
         players.add(player);
     }
 
     @Override
     public void invite(String source, String target) {
+        PlayersManager.getPlayer(target).gameInviteReceived(this, source);
+    }
+
+    @Override
+    public void preGameActions() {
 
     }
 
@@ -45,6 +52,11 @@ public class TestGame extends Game {
 
     @Override
     public void postTurnActions(Player player) {
+
+    }
+
+    @Override
+    public void postGameActions() {
 
     }
 }

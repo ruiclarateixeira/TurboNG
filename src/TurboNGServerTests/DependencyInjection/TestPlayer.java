@@ -14,7 +14,7 @@ public class TestPlayer extends Player {
     }
 
     @Override
-    public void invite(Game game, String source) {
+    public void gameInviteReceived(Game game, String source) {
 
     }
 

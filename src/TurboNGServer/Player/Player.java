@@ -5,8 +5,9 @@ import TurboNGServer.Interface.Action;
 
 /**
  * Created by ruijorgeclarateixeira on 29/09/14.
- * This class holds all the player information and performs all players actions that
- * the client sends.
+ * This class provides the skeleton of a player with all the player
+ * related methods that are important for the inner workings of the
+ * framework.
 */
 public abstract class Player {
     /**
@@ -20,7 +21,8 @@ public abstract class Player {
     public PlayerLobby playerLobby = null;
 
     /**
-     * Game that the user is currently in. Null if not in any game.
+     * Game that the user is currently in. Null if not in any game. This
+     * should be an implementation of the abstract class Game.
      */
     public Game game = null;
 
@@ -35,7 +37,7 @@ public abstract class Player {
      * @param game Game to join or decline.
      * @param source Username of the player that invited.
      */
-    public abstract void invite(Game game, String source);
+    public abstract void gameInviteReceived(Game game, String source);
 
     /**
      * Used in game. Order to get action from user received.
@@ -105,20 +107,11 @@ public abstract class Player {
 
     /**
      * Invite another player to the game this is currently in.
-     * @param target Username of the player to invite.
+     * @param target Username of the player to gameInviteReceived.
      */
-    public void inviteToGame(String target) {
+    public void sendGameInvite(String target) {
         if(this.game != null)
             this.game.invite(this.username, target);
-    }
-
-    /**
-     * Join given game if not already in game.
-     * @param g Game to join.
-     */
-    public void joinGame(Game g) {
-        if(this.game == null)
-            g.addPlayer(this);
     }
 
     /**
@@ -127,7 +120,7 @@ public abstract class Player {
     public void createGame() {
         if(this.game == null) {
             this.game = initGame();
-            joinGame(this.game);
+            this.game.join(this);
         }
     }
 }

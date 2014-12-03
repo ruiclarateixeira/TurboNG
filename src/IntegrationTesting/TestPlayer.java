@@ -36,7 +36,12 @@ public class TestPlayer extends Player{
             case ("invite"):
                 System.out.println("Invite");
                 if(action.getValueOf("target") != null) {
-                   inviteToGame(action.getValueOf("target"));
+                   sendGameInvite(action.getValueOf("target"));
+                }
+                break;
+            case ("startGame"):
+                if(this.game != null) {
+                    this.game.start();
                 }
                 break;
             default:
@@ -45,8 +50,8 @@ public class TestPlayer extends Player{
     }
 
     @Override
-    public void invite(Game game, String source) {
-        sendToClient(new Action("{action:invite, source: " + source + "}"));
+    public void gameInviteReceived(Game game, String source) {
+        game.join(this);
     }
 
     @Override

@@ -25,6 +25,15 @@
             <zipgroupfileset dir="libraries" includes="**/*.jar"/>
         </jar>
     </target>
+
+    <target name="docgen">
+        <mkdir dir="docs"/>
+        <javadoc sourcepath="src" destdir="docs"/>
+    </target>
+
+    <target name="docrm">
+        <delete dir="docs"/>
+    </target>
     
     <target name="chesse" depends="jar-chess-e">
         <java jar="build/jar/Chess_e.v.1.0.jar" fork="true"/>
