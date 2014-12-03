@@ -15,11 +15,6 @@ public class TestGame extends Game {
     }
 
     @Override
-    public Game createGame() {
-        return null;
-    }
-
-    @Override
     public void join(Player player) {
         System.out.println("Player Joined! " + player.username);
         players.add(player);
