@@ -1,6 +1,0 @@
-digraph G1 {
-  concentrate = true;
-  n2 [label="members/TurboNGServer.Interface.LobbyInterface"];
-  n2 -> NewsFeed;
-  n2 -> Player;
-}
