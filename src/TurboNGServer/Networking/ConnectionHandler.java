@@ -27,6 +27,7 @@ public class ConnectionHandler {
      * Starts the connection handler.
      * @param pool Pool of threads.
      * @param serverSocket Socket the connection handler listens to.
+     * @param playerFactory Instance of a player factory.
      */
     public static void start(ExecutorService pool, ServerSocket serverSocket, IPlayerFactory playerFactory) {
         while(serverRunning) {

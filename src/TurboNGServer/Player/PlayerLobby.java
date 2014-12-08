@@ -12,9 +12,19 @@ import java.util.concurrent.Callable;
  * This class is the main interface between the player class and the client.
  */
 public class PlayerLobby implements Callable<Void> {
+    /**
+     * Input from the client.
+     */
     public BufferedReader bufReader = null;
+
+    /**
+     * Output to the client.
+     */
     public BufferedWriter bufWriter = null;
 
+    /**
+     * Player that is in the lobby
+     */
     Player player;
 
     public PlayerLobby(IPlayerFactory playerFactory) {
