@@ -12,6 +12,7 @@ import TurboNGServer.ServerSettings.ServerResponses;
 
 public class TestPlayer extends Player{
     public TestPlayer() {
+        System.out.println("NEW TEST PLAYER");
     }
 
     @Override

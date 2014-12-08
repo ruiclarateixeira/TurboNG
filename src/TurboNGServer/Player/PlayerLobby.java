@@ -1,10 +1,8 @@
 package TurboNGServer.Player;
 
 import TurboNGServer.Interface.Action;
-import TurboNGServer.Player.Player;
 import TurboNGServer.ServerSettings.ServerResponses;
 
-import javax.inject.Inject;
 import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.Callable;
@@ -17,7 +15,11 @@ public class PlayerLobby implements Callable<Void> {
     public BufferedReader bufReader = null;
     public BufferedWriter bufWriter = null;
 
-    @Inject Player player;
+    Player player;
+
+    public PlayerLobby(IPlayerFactory playerFactory) {
+        player = playerFactory.instantiatePlayer();
+    }
 
     /**
      *
@@ -26,6 +28,7 @@ public class PlayerLobby implements Callable<Void> {
     public Player getPlayer() {
         return player;
     }
+
 
     /**
      * Gives interface the socket to listen from.

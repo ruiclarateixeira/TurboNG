@@ -2,6 +2,7 @@ package TurboNGServer;
 
 import TurboNGServer.Networking.ConnectionHandler;
 import TurboNGServer.Networking.TurboNGServerSocketFactory;
+import TurboNGServer.Player.IPlayerFactory;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -83,8 +84,9 @@ public class TurboNGServer {
 
     /**
      * Starts server
+     * @param playerFactory Factory that creates an implementation of Player.
      */
-    public void start() {
+    public void start(IPlayerFactory playerFactory) {
         System.out.println("Starting game server.");
         try {
             System.out.println("Creating listening socket.");
@@ -92,7 +94,7 @@ public class TurboNGServer {
             if(serverSocket != null) {
                 System.out.println("Socket listening on " + serverSocket.getLocalPort());
                 System.out.println("Starting Connection Handler with Thread Pool of size " + numberOfThreads);
-                ConnectionHandler.start(initThreadPool(numberOfThreads), serverSocket);
+                ConnectionHandler.start(initThreadPool(numberOfThreads), serverSocket, playerFactory);
             }
             System.out.println("Server is running.");
         } catch (RuntimeException e) {

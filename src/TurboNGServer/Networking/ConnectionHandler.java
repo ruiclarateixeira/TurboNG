@@ -1,8 +1,7 @@
 package TurboNGServer.Networking;
 
-import DependencyInjection.LobbyDependencyInjector;
+import TurboNGServer.Player.IPlayerFactory;
 import TurboNGServer.Player.PlayerLobby;
-import dagger.ObjectGraph;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -25,25 +24,15 @@ public class ConnectionHandler {
     public static boolean serverRunning = true;
 
     /**
-     * Accesses dependency injection graph to instantiate lobby interface.
-     * @return Instantiated lobby interface with injected variables.
-     */
-    public static PlayerLobby initLobbyInterface() {
-        ObjectGraph objectGraph;
-        objectGraph = ObjectGraph.create(new LobbyDependencyInjector());
-        return objectGraph.get(PlayerLobby.class);
-    }
-
-    /**
      * Starts the connection handler.
      * @param pool Pool of threads.
      * @param serverSocket Socket the connection handler listens to.
      */
-    public static void start(ExecutorService pool, ServerSocket serverSocket) {
+    public static void start(ExecutorService pool, ServerSocket serverSocket, IPlayerFactory playerFactory) {
         while(serverRunning) {
             try {
                 Socket clientSocket = serverSocket.accept(); // BLOCKS EXECUTION
-                PlayerLobby playerLobby = initLobbyInterface();
+                PlayerLobby playerLobby = new PlayerLobby(playerFactory);
                 playerLobby.listen(clientSocket);
                 pool.submit(playerLobby);
             } catch (IOException e) {

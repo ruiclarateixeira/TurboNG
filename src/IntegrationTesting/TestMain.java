@@ -8,6 +8,6 @@ import TurboNGServer.TurboNGServer;
 public class TestMain {
     public static void main(String[] args) {
         TurboNGServer gameServer = TurboNGServer.createInstance(8080, 50, false);
-        gameServer.start();
+        gameServer.start(new TestPlayerFactory());
     }
 }

@@ -5,23 +5,16 @@
     
     <target name="compile">
         <mkdir dir="build/classes"/>
-        <javac srcdir="src" destdir="build/classes">
+        <javac srcdir="src/TurboNGServer" destdir="build/classes">
             <classpath>
                 <pathelement path="libraries/json-20140107.jar"/>
-                <pathelement path="libraries/dagger-1.2.2.jar"/>
-                <pathelement path="libraries/dagger-compiler-1.2.2.jar"/>
-                <pathelement path="libraries/javax.inject.jar"/>
-                <pathelement path="libraries/javawriter-2.5.0.jar"/>
             </classpath>
         </javac>
     </target>
     
-    <target name="jar-chess-e">
+    <target name="jar">
         <mkdir dir="build/jar"/>
         <jar destfile="build/jar/TurboNG.jar" basedir="build/classes">
-            <manifest>
-                <attribute name="Main-Class" value="IntegrationTesting.TestMain"/>
-            </manifest>
             <zipgroupfileset dir="libraries" includes="**/*.jar"/>
         </jar>
     </target>
@@ -33,9 +26,5 @@
 
     <target name="docrm">
         <delete dir="docs"/>
-    </target>
-    
-    <target name="chesse" depends="jar-chess-e">
-        <java jar="build/jar/Chess_e.v.1.0.jar" fork="true"/>
     </target>
 </project>
