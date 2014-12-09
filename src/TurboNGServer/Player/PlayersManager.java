@@ -1,5 +1,6 @@
 package TurboNGServer.Player;
 
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -35,5 +36,13 @@ public class PlayersManager {
      */
     public static void removePlayer(String username) {
         onlinePLayers.remove(username);
+    }
+
+    /**
+     * Returns all online players.
+     * @return List of all online players.
+     */
+    public static ArrayList<Player> getAllPlayers() {
+        return new ArrayList<>(onlinePLayers.values());
     }
 }
