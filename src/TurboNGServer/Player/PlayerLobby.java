@@ -75,6 +75,7 @@ public class PlayerLobby implements Callable<Void> {
                 sendToPlayer(new Action(input));
             } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
         }
     }

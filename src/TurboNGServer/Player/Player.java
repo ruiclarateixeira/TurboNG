@@ -56,6 +56,11 @@ public abstract class Player {
     public abstract Game initGame();
 
     /**
+     * Called when it's the player's turn
+     */
+    public abstract void turn();
+
+    /**
      * Chat message received.
      * @param source Username of the sender.
      * @param message Message received.

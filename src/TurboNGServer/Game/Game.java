@@ -1,6 +1,5 @@
 package TurboNGServer.Game;
 
-import TurboNGServer.Interface.Action;
 import TurboNGServer.Player.Player;
 
 import java.util.ArrayList;
@@ -16,12 +15,17 @@ public abstract class Game {
      * Current state of the game. Initialized as true since the game
      * is not running.
      */
-    private boolean finished = true;
+    private boolean running = false;
 
     /**
      * Current players in the game.
      */
     public ArrayList<Player> players = new ArrayList<>();
+
+    /**
+     * Current player's index
+     */
+    private int currentPlayer = 0;
 
     /**
      * Called when trying to add a player to the game.
@@ -65,21 +69,61 @@ public abstract class Game {
     public abstract void postGameActions();
 
     /**
-     * Starts the game and runs until finished=false
+     * Start new round
+     */
+    public void startRound() {
+        currentPlayer = 0;
+        preRoundActions();
+        startTurn();
+    }
+
+    /**
+     * Start new turn
+     */
+    public void startTurn() {
+        if(currentPlayer < this.players.size()) {
+            preTurnActions(this.players.get(currentPlayer));
+            this.players.get(currentPlayer).turn();
+        }
+    }
+
+    /**
+     * End Round
+     */
+    public void endRound() {
+        postRoundActions();
+        startRound();
+    }
+
+    /**
+     * End the current player's turn
+     */
+    public void endTurn() {
+        postTurnActions(players.get(currentPlayer));
+
+        currentPlayer++;
+        if(players.size() >= currentPlayer)
+            endRound();
+    }
+
+    /**
+     * End game
+     */
+    public void end() {
+        postGameActions();
+        running = false;
+    }
+
+    /**
+     * Starts the game if it's not running already
      */
     public void start() {
-        finished = false;
+        if(this.running)
+            return;
+
+        this.running = true;
         preGameActions();
-        while(!finished) {
-            preRoundActions();
-            for(Player player : players) {
-                player.sendToClient(new Action("{action:gameAction}"));
-                preTurnActions(player);
-                player.getAction();
-                postTurnActions(player);
-            }
-            postRoundActions();
-        }
-        postGameActions();
+
+        startRound();
     }
 }
