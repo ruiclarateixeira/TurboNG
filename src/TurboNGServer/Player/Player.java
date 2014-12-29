@@ -3,6 +3,8 @@ package TurboNGServer.Player;
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
+
 /**
  * Created by ruijorgeclarateixeira on 29/09/14.
  * This class provides the skeleton of a player with all the player
@@ -70,7 +72,7 @@ public abstract class Player {
     /**
      *  Add this player to the list of online players.
      */
-    public void addToOnlinePlayers() throws Exception {
+    public void addToOnlinePlayers() throws NullPointerException, KeyAlreadyExistsException {
         if(username != null) {
             PlayersManager.addPlayer(this);
         }
