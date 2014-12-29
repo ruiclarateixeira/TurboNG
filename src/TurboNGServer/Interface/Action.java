@@ -22,7 +22,6 @@ public class Action {
         }
         catch (JSONException e) {
             jsonMessage = null;
-            e.printStackTrace();
         }
     }
 
@@ -31,10 +30,7 @@ public class Action {
      * @return True if the message is in correct json format. False Otherwise.
      */
     public boolean isValid() {
-        if (jsonMessage == null) {
-            return false;
-        }
-        return true;
+        return jsonMessage != null;
     }
 
     /**
