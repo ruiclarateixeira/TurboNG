@@ -1,5 +1,6 @@
 package TurboNGServer.Player;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,7 +27,14 @@ public class PlayersManager {
      * Adds player to the online players list.
      * @param player Player to be added.
      */
-    public static void addPlayer(Player player) {
+    public static void addPlayer(Player player) throws KeyAlreadyExistsException, NullPointerException {
+        if(player.username == null) {
+            throw new NullPointerException("Username cannot be null!");
+        }
+
+        if(onlinePLayers.containsKey(player.username)) {
+            throw new KeyAlreadyExistsException("Username already exists!");
+        }
         onlinePLayers.put(player.username, player);
     }
 

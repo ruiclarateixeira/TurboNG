@@ -26,7 +26,11 @@ public class TestPlayer extends Player{
                 System.out.println("Login");
                 if (action.getValueOf("username") != null) {
                     username = action.getValueOf("username");
-                    addToOnlinePlayers();
+                    try {
+                        addToOnlinePlayers();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     sendToClient(new Action("{action:loginSuccessful}"));
                 }
                 break;
@@ -68,6 +72,11 @@ public class TestPlayer extends Player{
     @Override
     public Game initGame() {
         return new TestGame();
+    }
+
+    @Override
+    public void turn() {
+
     }
 
     @Override

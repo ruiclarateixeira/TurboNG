@@ -70,7 +70,7 @@ public abstract class Player {
     /**
      *  Add this player to the list of online players.
      */
-    public void addToOnlinePlayers() {
+    public void addToOnlinePlayers() throws Exception {
         if(username != null) {
             PlayersManager.addPlayer(this);
         }
