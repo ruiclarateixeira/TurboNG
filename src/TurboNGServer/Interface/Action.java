@@ -71,4 +71,17 @@ public class Action {
         else
             return null;
     }
+
+    /**
+     * General actions
+     */
+    public static final Action ERROR_101_ACTION_NOT_FOUND =  new Action("{ type: response, "
+            + "action: error, "
+            + "code: 101, "
+            + "message: Action not found }");
+
+    public static final Action ERROR_102_ILLEGAL_FORMAT =  new Action("{ type: response, "
+            + "action: error, "
+            + "code: 102, "
+            + "message: Illegal Format }");
 }

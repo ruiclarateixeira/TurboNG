@@ -3,7 +3,6 @@ package IntegrationTesting;
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
 import TurboNGServer.Player.Player;
-import TurboNGServer.ServerSettings.ServerResponses;
 
 /**
  * Created by ruijorgeclarateixeira on 16/11/14.
@@ -18,7 +17,7 @@ public class TestPlayer extends Player{
     @Override
     public void executeAction(Action action) {
         if(!action.isValid()) {
-            sendToClient(new Action(ServerResponses.ERROR_102_ILLEGAL_FORMAT));
+            sendToClient(Action.ERROR_102_ILLEGAL_FORMAT);
         }
 
         switch (action.getValueOf("action")) {
@@ -50,7 +49,7 @@ public class TestPlayer extends Player{
                 }
                 break;
             default:
-                sendToClient(new Action(ServerResponses.ERROR_101_ACTION_NOT_FOUND));
+                sendToClient(Action.ERROR_101_ACTION_NOT_FOUND);
         }
     }
 

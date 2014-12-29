@@ -1,7 +1,6 @@
 package TurboNGServer.Player;
 
 import TurboNGServer.Interface.Action;
-import TurboNGServer.ServerSettings.ServerResponses;
 
 import java.io.*;
 import java.net.Socket;
@@ -90,7 +89,7 @@ public class PlayerLobby implements Callable<Void> {
             player.executeAction(action);
         }
         else {
-            sendToClient(new Action(ServerResponses.ERROR_102_ILLEGAL_FORMAT));
+            sendToClient(Action.ERROR_102_ILLEGAL_FORMAT);
         }
     }
 
