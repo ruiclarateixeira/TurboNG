@@ -41,36 +41,16 @@ public class TurboNGServer {
      * @param numberOfThreads Size of the thread pool.
      * @param sslConnection True if the socket should use SSL security. False otherwise.
      */
-    private TurboNGServer(int port, int numberOfThreads, boolean sslConnection) {
+    public TurboNGServer(int port, int numberOfThreads, boolean sslConnection, char[] sslPassword ,String SSLKeysPath) {
         this.port = port;
         this.numberOfThreads = numberOfThreads;
         this.sslConnection = sslConnection;
-    }
 
-    /**
-     * Instantiates an object of this class.
-     * @param port Port that server socket listens from.
-     * @param numberOfThreads Size of the thread pool.
-     * @param withSSLConnection True if the socket should use SSL security. False otherwise.
-     */
-    public static TurboNGServer createInstance(int port, int numberOfThreads, boolean withSSLConnection) {
-        return new TurboNGServer(port, numberOfThreads, withSSLConnection);
-    }
-
-    /**
-     * Initializes server socket.
-     * @param rPort Port that server socket listens from.
-     * @param withSSLConnection True if the socket should use SSL security. False otherwise.
-     * @return  ServerSocket or SSLServerSocket depending on required security.
-     */
-    private ServerSocket initSocket(int rPort, boolean withSSLConnection) {
-        ServerSocket socket = null;
         try {
-            socket = TurboNGServerSocketFactory.createNGServerSocket(rPort, withSSLConnection);
+            this.serverSocket = TurboNGServerSocketFactory.createNGServerSocket(this.port, this.sslConnection, sslPassword, SSLKeysPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return socket;
     }
 
     /**
@@ -87,14 +67,16 @@ public class TurboNGServer {
      * @param playerFactory Factory that creates an implementation of Player.
      */
     public void start(IPlayerFactory playerFactory) {
-        System.out.println("Starting game server.");
         try {
-            System.out.println("Creating listening socket.");
-            serverSocket =  initSocket(port, sslConnection);
             if(serverSocket != null) {
+                System.out.println("Starting game server.");
                 System.out.println("Socket listening on " + serverSocket.getLocalPort());
                 System.out.println("Starting Connection Handler with Thread Pool of size " + numberOfThreads);
                 ConnectionHandler.start(initThreadPool(numberOfThreads), serverSocket, playerFactory);
+            }
+            else {
+                System.err.println("Socket not created!");
+                return;
             }
             System.out.println("Server is running.");
         } catch (RuntimeException e) {
