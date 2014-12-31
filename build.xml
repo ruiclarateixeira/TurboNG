@@ -3,7 +3,7 @@
         <delete dir="build"/>
     </target>
     
-    <target name="compile">
+    <target name="compile" depends="clean">
         <mkdir dir="build/classes"/>
         <javac srcdir="src/TurboNGServer" destdir="build/classes">
             <classpath>
@@ -12,11 +12,28 @@
         </javac>
     </target>
     
-    <target name="jar">
+    <target name="jar" depends="compile">
         <mkdir dir="build/jar"/>
         <jar destfile="build/jar/TurboNG.jar" basedir="build/classes">
             <zipgroupfileset dir="libraries" includes="**/*.jar"/>
         </jar>
+    </target>
+
+    <target name="integration-testing" depends="clean">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src/" destdir="build/classes">
+            <classpath>
+                <pathelement path="libraries/json-20140107.jar"/>
+            </classpath>
+        </javac>
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/IntegrationTesting.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="IntegrationTesting.TestMain"/>
+            </manifest>
+            <zipgroupfileset dir="libraries" includes="**/*.jar"/>
+        </jar>
+        <java jar="build/jar/IntegrationTesting.jar" fork="true"/>
     </target>
 
     <target name="docgen">

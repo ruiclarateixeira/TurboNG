@@ -3,8 +3,7 @@ package TurboNGServer.Networking;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocketFactory;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.security.*;
 import java.security.cert.CertificateException;
@@ -36,12 +35,17 @@ public class TurboNGServerSocketFactory {
         SSLServerSocketFactory factory;
         try {
             if (authenticationRequired) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+                char[] password;
+                System.out.print("SSL Keys Password:");
+                password = System.console().readPassword();
+                System.out.println(password);
                 SSLContext context = SSLContext.getInstance(algorithm);
 
                 KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 
                 KeyStore ks = KeyStore.getInstance("JKS");
-                char[] password = "13ncldm1p".toCharArray(); // TESTING ONLY
+
                 ks.load(new FileInputStream(sslKeysPath), password);
                 kmf.init(ks, password);
                 context.init(kmf.getKeyManagers(), null, null);
