@@ -20,3 +20,6 @@ target/*
 build/*
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/inspectionProfiles/Project_Default.xml
+
+# SSL Keystores
+*.keys
