@@ -134,6 +134,10 @@ public abstract class Game {
             return;
 
         this.running = true;
+
+        for(Player player : players)
+            player.gameStarted(this);
+
         preGameActions();
 
         startRound();
