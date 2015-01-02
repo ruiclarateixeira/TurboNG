@@ -42,10 +42,16 @@ public abstract class Player {
     public abstract void gameInviteReceived(Game game, String source);
 
     /**
+     * Called when the game the player is in starts.
+     * @param requestingGame Game that is starting.
+     */
+    public abstract void gameStarted(Game requestingGame);
+
+    /**
      * Used in game. Order to get action from user received.
      * @return action sent by the client.
      */
-    public abstract Action getAction();
+    public abstract void getAction();
 
     /**
      * Order to disconnect received.
@@ -95,14 +101,6 @@ public abstract class Player {
     }
 
     /**
-     * Send an action to another player.
-     * @param username Username of the target player.
-     * @param action Action to send.
-     */
-    public void sendActionTo(String username, Action action) {
-    }
-
-    /**
      * Send message to another player.
      * @param username Username of the target player.
      * @param message Message to send.
@@ -110,6 +108,17 @@ public abstract class Player {
     public void sendMessageTo(String username, String message) {
         if(PlayersManager.getPlayer(username).username != null)
             PlayersManager.getPlayer(username).chatMessage(this.username, message);
+    }
+
+    /**
+     * Send message to all the players except this one
+     * @param messageContent Content of the message to be send.
+     */
+    public void sendMessageToAll(String messageContent) {
+        for(Player player : PlayersManager.getAllPlayers()) {
+            if(!player.username.equals(this.username))
+               player.chatMessage(this.username, messageContent);
+        }
     }
 
     /**
