@@ -66,7 +66,19 @@ public abstract class Game {
      * @param player Player who just finished their turn.
      */
     public abstract void postTurnActions(Player player);
+
+    /**
+     * Called when game ends.
+     */
     public abstract void postGameActions();
+
+
+    /**
+     * Getter for running.
+     */
+    public boolean isRunning() {
+        return running;
+    }
 
     /**
      * Start new round
