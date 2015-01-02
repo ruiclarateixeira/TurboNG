@@ -50,7 +50,8 @@ public class Action {
     }
 
     /**
-     * Adds a given object into
+     * Adds a given object into the json object. Creates an empty one and adds to it
+     * if current object is not valid.
      * @param key Object's Key
      * @param value Object's value
      */
