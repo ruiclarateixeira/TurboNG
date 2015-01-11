@@ -23,3 +23,6 @@ build/*
 
 # SSL Keystores
 *.keys
+
+# Configuration file
+src/TurboNGServer/ServerSettings/config.properties
