@@ -1,5 +1,6 @@
-# TurboNG Properties
+#### TurboNG Properties ####
 
+### Socket Settings ###
 # Listening Port
 PORT=8080
 
@@ -8,8 +9,8 @@ THREADS=50
 
 # Use SSL secured sockets
 SSL=False
-# Path to SSL Keystore
-## Use in case SSL=True ##
+
+# Path to SSL Keystore || Use in case SSL=True
 # KEYSTORE_PATH=
 
 
