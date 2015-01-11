@@ -14,10 +14,10 @@ public class Settings {
     public static int NumberOfThreads, ListeningPort;
     public static String SSLKeysPath;
 
-    public static void Load() {
+    public static void Load(String propertiesPath) {
         try {
             Properties properties = new Properties();
-            FileInputStream in = new FileInputStream("config.properties");
+            FileInputStream in = new FileInputStream(propertiesPath);
             properties.load(in);
                 ListeningPort = Integer.parseInt((String) properties.get("PORT"));
                 NumberOfThreads = Integer.parseInt((String) properties.get("THREADS"));
@@ -29,7 +29,7 @@ public class Settings {
             in.close();
             validSettings = true;
         } catch (FileNotFoundException e) {
-            System.err.println("File config.properties not found.");
+            System.err.println("File " + propertiesPath + " not found.");
             validSettings = false;
         } catch (IOException e) {
             e.printStackTrace();

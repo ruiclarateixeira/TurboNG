@@ -39,9 +39,10 @@ public class TurboNGServer {
     /**
      * TestMain Constructor
      * @param sslPassword Password to the SSL keystore. Null if no SSL connection needed.
+     * @param propertiesPath Path to the properties file.
      */
-    public TurboNGServer(char[] sslPassword) {
-        Settings.Load();
+    public TurboNGServer(String propertiesPath, char[] sslPassword) {
+        Settings.Load(propertiesPath);
 
         if(!Settings.validSettings) {
             System.err.println("Invalid settings in config.properties!\nServer not started!");
