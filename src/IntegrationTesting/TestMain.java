@@ -7,7 +7,7 @@ import TurboNGServer.TurboNGServer;
  */
 public class TestMain {
     public static void main(String[] args) {
-        TurboNGServer gameServer = new TurboNGServer(8080, 50, true, "13ncldm1p".toCharArray(), "/Users/ruijorgeclarateixeira/Development/TurboNGServer/turbong.keys");
+        TurboNGServer gameServer = new TurboNGServer("/Users/ruijorgeclarateixeira/Development/TurboNGServer/src/TurboNGServer/ServerSettings/config.properties", null);
         gameServer.start(new TestPlayerFactory());
     }
 }

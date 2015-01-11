@@ -59,8 +59,13 @@ public class TestPlayer extends Player{
     }
 
     @Override
-    public Action getAction() {
-        return null;
+    public void gameStarted(Game requestingGame) {
+
+    }
+
+    @Override
+    public void getAction() {
+
     }
 
     @Override
