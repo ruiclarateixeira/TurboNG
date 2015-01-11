@@ -22,21 +22,6 @@ public class TurboNGServer {
     ServerSocket serverSocket;
 
     /**
-     * Server socket listening port.
-     */
-    int port;
-
-    /**
-     * Number of threads in the thread pool.
-     */
-    int numberOfThreads;
-
-    /**
-     * Security required. True if ssl connection required. false otherwise.
-     */
-    boolean sslConnection;
-
-    /**
      * TestMain Constructor
      * @param sslPassword Password to the SSL keystore. Null if no SSL connection needed.
      * @param propertiesPath Path to the properties file.
@@ -45,7 +30,8 @@ public class TurboNGServer {
         Settings.Load(propertiesPath);
 
         if(!Settings.validSettings) {
-            System.err.println("Invalid settings in config.properties!\nServer not started!");
+            System.err.println("[CreateServer] Invalid settings in config.properties!"
+                                + "\n [CreateServer] Server not started!");
             return;
         }
 
@@ -79,8 +65,8 @@ public class TurboNGServer {
             if(serverSocket != null) {
                 System.out.println("[StartServer] Starting game server.");
                 System.out.println("[StartServer] Socket listening on " + serverSocket.getLocalPort());
-                System.out.println("[StartServer] Starting Connection Handler with Thread Pool of size " + numberOfThreads);
-                ConnectionHandler.start(initThreadPool(numberOfThreads), serverSocket, playerFactory);
+                System.out.println("[StartServer] Starting Connection Handler with Thread Pool of size " + Settings.NumberOfThreads);
+                ConnectionHandler.start(initThreadPool(Settings.NumberOfThreads), serverSocket, playerFactory);
             }
             else {
                 System.err.println("[StartServer] Socket not created!");
