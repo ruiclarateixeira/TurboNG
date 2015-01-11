@@ -9,7 +9,6 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.security.*;
 import java.security.cert.CertificateException;
-import java.util.Arrays;
 
 /**
  * Created by ruijorgeclarateixeira on 29/09/14.
