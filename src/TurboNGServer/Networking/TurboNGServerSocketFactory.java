@@ -50,8 +50,6 @@ public class TurboNGServerSocketFactory {
                 kmf.init(ks, sslPassword);
                 context.init(kmf.getKeyManagers(), null, null);
 
-                Arrays.fill(sslPassword, '0'); // Wipe the password
-
                 factory = context.getServerSocketFactory();
                 return factory.createServerSocket(Settings.ListeningPort);
             }
