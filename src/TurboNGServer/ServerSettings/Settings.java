@@ -9,6 +9,7 @@ import java.util.Properties;
  * Created by ruijorgeclarateixeira on 10/01/15.
  */
 public class Settings {
+    public static boolean validSettings = false;
     public static boolean SSL;
     public static int NumberOfThreads, ListeningPort;
     public static String SSLKeysPath;
@@ -26,10 +27,13 @@ public class Settings {
                 if(SSL)
                     SSLKeysPath = (String)properties.get("KEYSTORE_PATH");
             in.close();
+            validSettings = true;
         } catch (FileNotFoundException e) {
             System.err.println("File config.properties not found.");
+            validSettings = false;
         } catch (IOException e) {
             e.printStackTrace();
+            validSettings = false;
         }
     }
 }

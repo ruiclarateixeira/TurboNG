@@ -40,8 +40,12 @@ public class TurboNGServer {
      * TestMain Constructor
      * @param sslPassword Password to the SSL keystore. Null if no SSL connection needed.
      */
-    public TurboNGServer(char[] sslPassword) {
+    public TurboNGServer(char[] sslPassword) throws Exception {
         Settings.Load();
+
+        if(!Settings.validSettings)
+            throw new Exception("Invalid settings in config.properties!");
+
         try {
             this.serverSocket = TurboNGServerSocketFactory.createNGServerSocket(sslPassword);
         } catch (IOException e) {
