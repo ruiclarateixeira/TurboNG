@@ -1,0 +1,16 @@
+# TurboNG Properties
+
+# Listening Port
+PORT=8080
+
+# Number of Threads in the thread pool
+THREADS=50
+
+# Use SSL secured sockets
+SSL=False
+# Path to SSL Keystore
+## Use in case SSL=True ##
+# KEYSTORE_PATH=
+
+
+

@@ -3,6 +3,7 @@ package TurboNGServer;
 import TurboNGServer.Networking.ConnectionHandler;
 import TurboNGServer.Networking.TurboNGServerSocketFactory;
 import TurboNGServer.Player.IPlayerFactory;
+import TurboNGServer.ServerSettings.Settings;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -37,17 +38,12 @@ public class TurboNGServer {
 
     /**
      * TestMain Constructor
-     * @param port Port that server socket listens from.
-     * @param numberOfThreads Size of the thread pool.
-     * @param sslConnection True if the socket should use SSL security. False otherwise.
+     * @param sslPassword Password to the SSL keystore
      */
-    public TurboNGServer(int port, int numberOfThreads, boolean sslConnection, char[] sslPassword ,String SSLKeysPath) {
-        this.port = port;
-        this.numberOfThreads = numberOfThreads;
-        this.sslConnection = sslConnection;
-
+    public TurboNGServer(char[] sslPassword) {
+        Settings.Load();
         try {
-            this.serverSocket = TurboNGServerSocketFactory.createNGServerSocket(this.port, this.sslConnection, sslPassword, SSLKeysPath);
+            this.serverSocket = TurboNGServerSocketFactory.createNGServerSocket(sslPassword);
         } catch (IOException e) {
             e.printStackTrace();
         }

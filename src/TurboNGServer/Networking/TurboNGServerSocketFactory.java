@@ -1,5 +1,7 @@
 package TurboNGServer.Networking;
 
+import TurboNGServer.ServerSettings.Settings;
+
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -22,17 +24,14 @@ public class TurboNGServerSocketFactory {
     /**
      * Creates a SSLServerSocket
      * NOTE: Password is not hidden when input. This needs work.
-     * @param port Port in which the socket should listen
-     * @param authenticationRequired - If true the socket will only allow cipher suites with authentication
-     * @param sslPassword Password to the SSL keys file. Null if no authentication required.
-     * @param SSLKeysPath Path to the SSL keys file. Null if no authentication required
+     * @param sslPassword Password for the ssl keystore. Null if no SSL connection required.
      * @return - Returns the created socket or null if a problem is found
      */
-    public static ServerSocket createNGServerSocket(int port, boolean authenticationRequired, char[] sslPassword ,String SSLKeysPath) throws IOException {
+    public static ServerSocket createNGServerSocket(char[] sslPassword) throws IOException {
         SSLServerSocketFactory factory;
         try {
-            if (authenticationRequired) {
-                if(SSLKeysPath == null) {
+            if (Settings.SSL) {
+                if(Settings.SSLKeysPath == null) {
                     System.out.println("Provide a path to the SSL keystore!");
                     return null;
                 }
@@ -47,17 +46,17 @@ public class TurboNGServerSocketFactory {
 
                 KeyStore ks = KeyStore.getInstance("JKS");
 
-                ks.load(new FileInputStream(SSLKeysPath), sslPassword);
+                ks.load(new FileInputStream(Settings.SSLKeysPath), sslPassword);
                 kmf.init(ks, sslPassword);
                 context.init(kmf.getKeyManagers(), null, null);
 
                 Arrays.fill(sslPassword, '0'); // Wipe the password
 
                 factory = context.getServerSocketFactory();
-                return factory.createServerSocket(port);
+                return factory.createServerSocket(Settings.ListeningPort);
             }
             else {
-                return new ServerSocket(port);
+                return new ServerSocket(Settings.ListeningPort);
             }
         } catch (NoSuchAlgorithmException | UnrecoverableKeyException | KeyManagementException | KeyStoreException | CertificateException e) {
             e.printStackTrace();

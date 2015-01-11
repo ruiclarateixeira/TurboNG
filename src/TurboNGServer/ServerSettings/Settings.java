@@ -9,13 +9,21 @@ import java.util.Properties;
  */
 public class Settings {
     public static boolean SSL;
+    public static int NumberOfThreads, ListeningPort;
+    public static String SSLKeysPath;
 
     public static void Load() {
         try {
             Properties properties = new Properties();
             FileInputStream in = new FileInputStream("config.properties");
             properties.load(in);
+                ListeningPort = Integer.parseInt((String) properties.get("PORT"));
+                NumberOfThreads = Integer.parseInt((String) properties.get("THREADS"));
+
                 SSL = Boolean.parseBoolean((String)properties.get("SSL"));
+
+                if(SSL)
+                    SSLKeysPath = (String)properties.get("KEYSTORE_PATH");
             in.close();
         } catch (IOException e) {
             e.printStackTrace();
