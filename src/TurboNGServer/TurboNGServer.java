@@ -31,7 +31,7 @@ public class TurboNGServer {
 
         if(!Settings.validSettings) {
             System.err.println("[CreateServer] Invalid settings in config.properties!"
-                                + "\n [CreateServer] Server not started!");
+                                + "\n[CreateServer] Server not started!");
             return;
         }
 
