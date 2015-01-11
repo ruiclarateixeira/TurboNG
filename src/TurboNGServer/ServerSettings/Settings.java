@@ -16,6 +16,9 @@ public class Settings {
 
     public static void Load(String propertiesPath) {
         try {
+            if(propertiesPath == null)
+                throw new FileNotFoundException();
+
             Properties properties = new Properties();
             FileInputStream in = new FileInputStream(propertiesPath);
             properties.load(in);
