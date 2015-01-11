@@ -1,6 +1,7 @@
 package TurboNGServer.ServerSettings;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -25,6 +26,8 @@ public class Settings {
                 if(SSL)
                     SSLKeysPath = (String)properties.get("KEYSTORE_PATH");
             in.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("File config.properties not found.");
         } catch (IOException e) {
             e.printStackTrace();
         }
