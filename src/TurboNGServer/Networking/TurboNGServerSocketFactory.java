@@ -32,11 +32,11 @@ public class TurboNGServerSocketFactory {
         try {
             if (Settings.SSL) {
                 if(Settings.SSLKeysPath == null) {
-                    System.out.println("Provide a path to the SSL keystore!");
+                    System.err.println("Provide a path to the SSL keystore!");
                     return null;
                 }
                 else if(sslPassword == null) {
-                    System.out.println("Provide keystore password!");
+                    System.err.println("Provide keystore password!");
                     return null;
                 }
 
