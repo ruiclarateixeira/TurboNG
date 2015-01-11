@@ -71,19 +71,24 @@ public class TurboNGServer {
      */
     public void start(IPlayerFactory playerFactory) {
         try {
+            if(!Settings.validSettings) {
+                System.err.println("[StartServer] Invalid Settings.");
+                return;
+            }
+
             if(serverSocket != null) {
-                System.out.println("Starting game server.");
-                System.out.println("Socket listening on " + serverSocket.getLocalPort());
-                System.out.println("Starting Connection Handler with Thread Pool of size " + numberOfThreads);
+                System.out.println("[StartServer] Starting game server.");
+                System.out.println("[StartServer] Socket listening on " + serverSocket.getLocalPort());
+                System.out.println("[StartServer] Starting Connection Handler with Thread Pool of size " + numberOfThreads);
                 ConnectionHandler.start(initThreadPool(numberOfThreads), serverSocket, playerFactory);
             }
             else {
-                System.err.println("Socket not created!");
+                System.err.println("[StartServer] Socket not created!");
                 return;
             }
-            System.out.println("Server is running.");
+            System.out.println("[StartServer] Server is running.");
         } catch (RuntimeException e) {
-            System.out.println("Uncaught exception! Server will stop!" + "\nException Action" + e.getMessage());
+            System.out.println("[StartServer] Uncaught exception! Server will stop!" + "\nException Action" + e.getMessage());
             e.printStackTrace();
         }
     }
