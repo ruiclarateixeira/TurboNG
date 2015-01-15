@@ -26,3 +26,6 @@ build/*
 
 # Configuration file
 src/TurboNGServer/ServerSettings/config.properties
+
+# Listener ModuleManagement File
+src/TurboNGServer/ModuleManagement/listenermodules.properties
