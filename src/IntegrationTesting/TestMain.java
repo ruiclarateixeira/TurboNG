@@ -1,13 +1,14 @@
 package IntegrationTesting;
 
-import TurboNGServer.TurboNGServer;
+import TurboNGServer.ModuleManagement.ListenerModulesManager;
 
 /**
  * Created by ruijorgeclarateixeira on 16/11/14.
  */
 public class TestMain {
     public static void main(String[] args) {
-        TurboNGServer gameServer = new TurboNGServer(8080, 50, true, "13ncldm1p".toCharArray(), "/Users/ruijorgeclarateixeira/Development/TurboNGServer/turbong.keys");
-        gameServer.start(new TestPlayerFactory());
+        //TurboNGServer gameServer = new TurboNGServer("/Users/ruijorgeclarateixeira/Development/TurboNGServer/src/TurboNGServer/ServerSettings/config.properties", null);
+        //gameServer.start(new TestPlayerFactory());
+        ListenerModulesManager.load();
     }
 }

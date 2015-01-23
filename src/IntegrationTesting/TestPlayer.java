@@ -2,6 +2,7 @@ package IntegrationTesting;
 
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
+import TurboNGServer.Modules.PasswordlessLoginPlayer;
 import TurboNGServer.Player.Player;
 
 /**
@@ -9,30 +10,19 @@ import TurboNGServer.Player.Player;
  * A Chess Player.
  */
 
-public class TestPlayer extends Player{
+public class TestPlayer extends PasswordlessLoginPlayer {
     public TestPlayer() {
         System.out.println("NEW TEST PLAYER");
     }
 
     @Override
-    public void executeAction(Action action) {
+    public boolean executeAction(Action action) {
         if(!action.isValid()) {
             sendToClient(Action.ERROR_102_ILLEGAL_FORMAT);
         }
 
         switch (action.getValueOf("action")) {
-            case  ("login"):
-                System.out.println("Login");
-                if (action.getValueOf("username") != null) {
-                    username = action.getValueOf("username");
-                    try {
-                        addToOnlinePlayers();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    sendToClient(new Action("{action:loginSuccessful}"));
-                }
-                break;
+
             case ("createGame"):
                 System.out.println("createGame");
                 createGame();
@@ -51,6 +41,7 @@ public class TestPlayer extends Player{
             default:
                 sendToClient(Action.ERROR_101_ACTION_NOT_FOUND);
         }
+        return true;
     }
 
     @Override
@@ -59,8 +50,13 @@ public class TestPlayer extends Player{
     }
 
     @Override
-    public Action getAction() {
-        return null;
+    public void gameStarted(Game requestingGame) {
+
+    }
+
+    @Override
+    public void getAction() {
+
     }
 
     @Override

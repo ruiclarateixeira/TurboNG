@@ -29,12 +29,6 @@ public abstract class Player {
     public Game game = null;
 
     /**
-     * Received action to execute.
-     * @param action Action o execute.
-     */
-    public abstract void executeAction(Action action);
-
-    /**
      * Received invitation for a game
      * @param game Game to join or decline.
      * @param source Username of the player that invited.
@@ -74,6 +68,15 @@ public abstract class Player {
      * @param message Message received.
      */
     public abstract void chatMessage(String source, String message);
+
+    /**
+     * Received action to execute.
+     * @param action Action o execute.
+     * @return True if this method can execute the action. False otherwise.
+     */
+    public boolean executeAction(Action action) {
+        return false;
+    }
 
     /**
      *  Add this player to the list of online players.
