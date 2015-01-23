@@ -4,6 +4,7 @@ import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
+import java.util.ArrayList;
 
 /**
  * Created by ruijorgeclarateixeira on 29/09/14.
@@ -75,6 +76,19 @@ public abstract class Player {
      * @return True if this method can execute the action. False otherwise.
      */
     public boolean executeAction(Action action) {
+        if(action.getValueOf("action") != null) {
+            if(action.getValueOf("action").equals("showonline")) {
+                ArrayList<Player> players = PlayersManager.getAllPlayers();
+                String playerString = "[";
+                for (Player player : players)
+                    playerString += player.username + ",";
+                playerString = playerString.substring(0, playerString.length() - 1) + "]";
+                sendToClient(new Action("{type:lobby, action:show_online, players:" + playerString + "}"));
+                return true;
+            }
+            else
+                return false;
+        }
         return false;
     }
 
