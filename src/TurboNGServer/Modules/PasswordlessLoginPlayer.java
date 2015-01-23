@@ -14,7 +14,7 @@ public abstract class PasswordlessLoginPlayer extends Player {
     @Override
     public boolean executeAction(Action action) {
         if(!super.executeAction(action)) {
-            if (action.getValueOf("action").equals("login")) {
+            if (action.getValueOf("action") != null && action.getValueOf("action").equals("login")) {
                 if (action.getValueOf("username") != null) {
                     username = action.getValueOf("username");
                     try {

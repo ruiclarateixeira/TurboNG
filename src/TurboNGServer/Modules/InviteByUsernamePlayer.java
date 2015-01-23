@@ -11,7 +11,7 @@ public abstract class InviteByUsernamePlayer extends PasswordlessLoginPlayer {
     @Override
     public boolean executeAction(Action action) {
         if (!super.executeAction(action)) {
-            if (action.getValueOf("type").equals("invite")) {
+            if (action.getValueOf("type") != null && action.getValueOf("type").equals("invite")) {
                 switch (action.getValueOf("action")) {
                     case "invite":
                         if (action.getValueOf("target") != null) {
