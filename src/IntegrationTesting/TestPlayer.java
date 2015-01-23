@@ -2,6 +2,7 @@ package IntegrationTesting;
 
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
+import TurboNGServer.Modules.InviteByUsernamePlayer;
 import TurboNGServer.Modules.PasswordlessLoginPlayer;
 import TurboNGServer.Player.Player;
 
@@ -10,7 +11,7 @@ import TurboNGServer.Player.Player;
  * A Chess Player.
  */
 
-public class TestPlayer extends PasswordlessLoginPlayer {
+public class TestPlayer extends InviteByUsernamePlayer {
     public TestPlayer() {
         System.out.println("NEW TEST PLAYER");
     }
@@ -22,16 +23,9 @@ public class TestPlayer extends PasswordlessLoginPlayer {
         }
 
         switch (action.getValueOf("action")) {
-
             case ("createGame"):
                 System.out.println("createGame");
                 createGame();
-                break;
-            case ("invite"):
-                System.out.println("Invite");
-                if(action.getValueOf("target") != null) {
-                   sendGameInvite(action.getValueOf("target"));
-                }
                 break;
             case ("startGame"):
                 if(this.game != null) {

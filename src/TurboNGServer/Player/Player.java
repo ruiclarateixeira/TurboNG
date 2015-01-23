@@ -125,15 +125,6 @@ public abstract class Player {
     }
 
     /**
-     * Invite another player to the game this is currently in.
-     * @param target Username of the player to gameInviteReceived.
-     */
-    public void sendGameInvite(String target) {
-        if(this.game != null)
-            this.game.invite(this.username, target);
-    }
-
-    /**
      * Create a game and join it if this player is not another game.
      */
     public void createGame() {
