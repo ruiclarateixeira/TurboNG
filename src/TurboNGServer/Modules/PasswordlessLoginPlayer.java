@@ -19,7 +19,6 @@ public abstract class PasswordlessLoginPlayer extends Player {
                     username = action.getValueOf("username");
                     try {
                         addToOnlinePlayers();
-                        sendToClient(new Action("{action:loginSuccessful}"));
                         sendToClient(new Action("{type:login, action:successful, username:" + this.username + "}"));
                         for(Player player : PlayersManager.getAllPlayers()) {
                             if( !player.username.equals(username))
