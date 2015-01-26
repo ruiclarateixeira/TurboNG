@@ -23,7 +23,9 @@ public abstract class MessagingModule extends InviteByUsernameModule {
             return true;
         }
 
-        if(action.isValid() && action.getValueOf("type").equals("message")) {
+        if(action.isValid()
+                && action.getValueOf("type") != null
+                && action.getValueOf("type").equals("message")) {
             switch (action.getValueOf("action")) {
                 case "private":
                     if(action.getValueOf("target") != null && action.getValueOf("message") != null) {
