@@ -64,13 +64,6 @@ public abstract class Player {
     public abstract void turn();
 
     /**
-     * Chat message received.
-     * @param source Username of the sender.
-     * @param message Message received.
-     */
-    public abstract void chatMessage(String source, String message);
-
-    /**
      * Received action to execute.
      * @param action Action o execute.
      * @return True if this method can execute the action. False otherwise.
@@ -115,27 +108,6 @@ public abstract class Player {
      */
     public void sendToClient(Action action) {
         playerLobby.sendToClient(action);
-    }
-
-    /**
-     * Send message to another player.
-     * @param username Username of the target player.
-     * @param message Message to send.
-     */
-    public void sendMessageTo(String username, String message) {
-        if(PlayersManager.getPlayer(username).username != null)
-            PlayersManager.getPlayer(username).chatMessage(this.username, message);
-    }
-
-    /**
-     * Send message to all the players except this one
-     * @param messageContent Content of the message to be send.
-     */
-    public void sendMessageToAll(String messageContent) {
-        for(Player player : PlayersManager.getAllPlayers()) {
-            if(!player.username.equals(this.username))
-               player.chatMessage(this.username, messageContent);
-        }
     }
 
     /**

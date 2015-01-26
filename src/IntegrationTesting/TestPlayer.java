@@ -3,15 +3,23 @@ package IntegrationTesting;
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
 import TurboNGServer.Modules.InviteByUsernameModule;
+import TurboNGServer.Modules.MessagingModule;
+
+import java.lang.management.MemoryNotificationInfo;
 
 /**
  * Created by ruijorgeclarateixeira on 16/11/14.
  * A Chess Player.
  */
 
-public class TestPlayer extends InviteByUsernameModule {
+public class TestPlayer extends MessagingModule {
     public TestPlayer() {
         System.out.println("NEW TEST PLAYER");
+    }
+
+    @Override
+    public void chatMessage(String source, String message) {
+
     }
 
     @Override
@@ -63,11 +71,6 @@ public class TestPlayer extends InviteByUsernameModule {
 
     @Override
     public void turn() {
-
-    }
-
-    @Override
-    public void chatMessage(String source, String message) {
 
     }
 }
