@@ -13,30 +13,29 @@ import javax.management.openmbean.KeyAlreadyExistsException;
 public abstract class PasswordlessLoginModule extends Player {
     @Override
     public boolean executeAction(Action action) {
-        if(!super.executeAction(action)) {
-            if (action.getValueOf("action") != null && action.getValueOf("action").equals("login")) {
-                if (action.getValueOf("username") != null) {
-                    username = action.getValueOf("username");
-                    try {
-                        addToOnlinePlayers();
-                        sendToClient(new Action("{type:login, action:successful, username:" + this.username + "}"));
-                        for(Player player : PlayersManager.getAllPlayers()) {
-                            if( !player.username.equals(username))
-                                player.sendToClient(new Action("{type:lobby, action:new_online, username:" + this.username + "}"));
-                        }
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    } catch (KeyAlreadyExistsException e) {
-                        sendToClient(new Action("{type:login, action:username_exists}"));
+        if(super.executeAction(action))
+            return true;
+
+        if (action.getValueOf("action") != null && action.getValueOf("action").equals("login")) {
+            if (action.getValueOf("username") != null) {
+                username = action.getValueOf("username");
+                try {
+                    addToOnlinePlayers();
+                    sendToClient(new Action("{type:login, action:successful, username:" + this.username + "}"));
+                    for(Player player : PlayersManager.getAllPlayers()) {
+                        if( !player.username.equals(username))
+                            player.sendToClient(new Action("{type:lobby, action:new_online, username:" + this.username + "}"));
                     }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                } catch (KeyAlreadyExistsException e) {
+                    sendToClient(new Action("{type:login, action:username_exists}"));
                 }
-                return true;
             }
-            else
-                return false;
-        }
-        else {
             return true;
         }
+        else
+            return false;
+
     }
 }
