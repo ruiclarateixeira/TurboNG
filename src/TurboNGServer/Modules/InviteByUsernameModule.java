@@ -10,26 +10,25 @@ import TurboNGServer.Player.PlayersManager;
 public abstract class InviteByUsernameModule extends PasswordlessLoginModule {
     @Override
     public boolean executeAction(Action action) {
-        if (!super.executeAction(action)) {
-            if (action.getValueOf("type") != null && action.getValueOf("type").equals("invite")) {
-                switch (action.getValueOf("action")) {
-                    case "invite":
-                        if (action.getValueOf("target") != null) {
-                            sendGameInvite(action.getValueOf("target"));
-                        }
-                        break;
-                    case "acceptinvite":
-                        if (action.getValueOf("source") != null) {
-                            acceptInviteFrom(action.getValueOf("source"));
-                        }
-                }
-                return true;
-            }
-            else // action not executed
-                return false;
-        }
-        else // action executed by parent class
+        if (super.executeAction(action))
             return true;
+
+        if (action.getValueOf("type") != null && action.getValueOf("type").equals("invite")) {
+            switch (action.getValueOf("action")) {
+                case "invite":
+                    if (action.getValueOf("target") != null) {
+                        sendGameInvite(action.getValueOf("target"));
+                    }
+                    break;
+                case "acceptinvite":
+                    if (action.getValueOf("source") != null) {
+                        acceptInviteFrom(action.getValueOf("source"));
+                    }
+            }
+            return true;
+        }
+        else // action not executed
+            return false;
     }
 
     /**
