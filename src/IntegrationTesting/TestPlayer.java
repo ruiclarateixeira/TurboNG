@@ -2,16 +2,14 @@ package IntegrationTesting;
 
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
-import TurboNGServer.Modules.InviteByUsernamePlayer;
-import TurboNGServer.Modules.PasswordlessLoginPlayer;
-import TurboNGServer.Player.Player;
+import TurboNGServer.Modules.InviteByUsernameModule;
 
 /**
  * Created by ruijorgeclarateixeira on 16/11/14.
  * A Chess Player.
  */
 
-public class TestPlayer extends InviteByUsernamePlayer {
+public class TestPlayer extends InviteByUsernameModule {
     public TestPlayer() {
         System.out.println("NEW TEST PLAYER");
     }

@@ -10,7 +10,7 @@ import javax.management.openmbean.KeyAlreadyExistsException;
  * Created by ruijorgeclarateixeira on 15/01/15.
  * Password-less login module.
  */
-public abstract class PasswordlessLoginPlayer extends Player {
+public abstract class PasswordlessLoginModule extends Player {
     @Override
     public boolean executeAction(Action action) {
         if(!super.executeAction(action)) {
