@@ -20,7 +20,7 @@ public abstract class InviteByUsernameModule extends PasswordlessLoginModule {
                         sendGameInvite(action.getValueOf("target"));
                     }
                     break;
-                case "acceptinvite":
+                case "accept":
                     if (action.getValueOf("source") != null) {
                         acceptInviteFrom(action.getValueOf("source"));
                     }
