@@ -33,7 +33,7 @@ public abstract class InviteByUsernamePlayer extends PasswordlessLoginPlayer {
     }
 
     /**
-     * This should be part of the framework.
+     * Joins the game that the source player is in.
      * @param source Source of the invitation.
      */
     public void acceptInviteFrom(String source) {
