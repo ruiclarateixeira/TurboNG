@@ -24,9 +24,10 @@ public class TestPlayer extends MessagingModule {
 
     @Override
     public boolean executeAction(Action action) {
-        if(!action.isValid()) {
-            sendToClient(Action.ERROR_102_ILLEGAL_FORMAT);
-        }
+        if(super.executeAction(action))
+            return true;
+
+        System.out.println(action);
 
         switch (action.getValueOf("action")) {
             case ("createGame"):
