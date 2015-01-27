@@ -29,7 +29,7 @@ public abstract class MessagingModule extends InviteByUsernameModule {
             switch (action.getValueOf("action")) {
                 case "private":
                     if(action.getValueOf("target") != null && action.getValueOf("message") != null) {
-                        ((MessagingModule) PlayersManager.getPlayer(username)).chatMessage(this.username,
+                        ((MessagingModule) PlayersManager.getPlayer(action.getValueOf("target"))).chatMessage(this.username,
                                                                                             action.getValueOf("message"));
                     }
                     break;
