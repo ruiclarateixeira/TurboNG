@@ -25,7 +25,7 @@ public abstract class Game {
     /**
      * Current player's index
      */
-    private int currentPlayer = 0;
+    protected int currentPlayer = 0;
 
     /**
      * Called when trying to add a player to the game.
