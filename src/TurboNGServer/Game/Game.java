@@ -114,7 +114,7 @@ public abstract class Game {
         postTurnActions(players.get(currentPlayer));
 
         currentPlayer++;
-        if(players.size() >= currentPlayer)
+        if(currentPlayer >= players.size())
             endRound();
     }
 
