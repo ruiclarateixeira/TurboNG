@@ -116,6 +116,8 @@ public abstract class Game {
         currentPlayer++;
         if(currentPlayer >= players.size())
             endRound();
+        else
+            startTurn();
     }
 
     /**
