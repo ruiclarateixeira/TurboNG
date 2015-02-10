@@ -36,7 +36,7 @@ public abstract class PasswordlessLoginModule extends Player {
             }
         }
         else if (action.getValueOf("action").equals("logout")) {
-            sendToClient(new Action("{type:login, action:logout"));
+            sendToClient(new Action("{type:login, action:logout}"));
             PlayersManager.removePlayer(this.username);
             this.disconnect();
         }
