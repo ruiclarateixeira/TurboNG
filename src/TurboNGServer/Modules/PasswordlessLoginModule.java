@@ -15,15 +15,17 @@ public abstract class PasswordlessLoginModule extends Player {
     public boolean executeAction(Action action) {
         if(super.executeAction(action))
             return true;
+        else if (action.getValueOf("type") == null || action.getValueOf("action") == null || !action.getValueOf("type").equals("login"))
+            return false;
 
-        if (action.getValueOf("action") != null && action.getValueOf("action").equals("login")) {
+        if (action.getValueOf("action").equals("login")) {
             if (action.getValueOf("username") != null) {
                 username = action.getValueOf("username");
                 try {
                     addToOnlinePlayers();
                     sendToClient(new Action("{type:login, action:successful, username:" + this.username + "}"));
-                    for(Player player : PlayersManager.getAllPlayers()) {
-                        if( !player.username.equals(username))
+                    for (Player player : PlayersManager.getAllPlayers()) {
+                        if (!player.username.equals(username))
                             player.sendToClient(new Action("{type:lobby, action:new_online, username:" + this.username + "}"));
                     }
                 } catch (NullPointerException e) {
@@ -32,10 +34,13 @@ public abstract class PasswordlessLoginModule extends Player {
                     sendToClient(new Action("{type:login, action:username_exists}"));
                 }
             }
-            return true;
         }
-        else
-            return false;
+        else if (action.getValueOf("action").equals("logout")) {
+            this.disconnect();
+            PlayersManager.removePlayer(this.username);
+            sendToClient(new Action("{type:login, action:logout"));
+        }
 
+        return true;
     }
 }
