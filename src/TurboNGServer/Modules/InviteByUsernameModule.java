@@ -1,13 +1,14 @@
 package TurboNGServer.Modules;
 
 import TurboNGServer.Interface.Action;
+import TurboNGServer.Player.Player;
 import TurboNGServer.Player.PlayersManager;
 
 /**
  * Created by ruijorgeclarateixeira on 23/01/15.
  * Invite by username module.
  */
-public abstract class InviteByUsernameModule extends PasswordlessLoginModule {
+public abstract class InviteByUsernameModule extends Player {
     @Override
     public boolean executeAction(Action action) {
         if (super.executeAction(action))

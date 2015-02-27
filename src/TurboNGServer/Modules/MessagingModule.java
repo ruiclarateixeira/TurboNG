@@ -8,7 +8,7 @@ import TurboNGServer.Player.PlayersManager;
  * Created by ruijorgeclarateixeira on 26/01/15.
  * Module that allows player to send and receive messages. Public and private.
  */
-public abstract class MessagingModule extends InviteByUsernameModule {
+public abstract class MessagingModule extends Player {
 
     /**
      * Chat message received.
