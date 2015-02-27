@@ -25,9 +25,7 @@ build/*
 *.keys
 
 # Configuration file
-src/TurboNGServer/ServerSettings/config.properties
+src/IntegrationTesting/config.properties
 
-# Listener ModuleManagement File
-src/TurboNGServer/ModuleManagement/listenermodules.properties
-
+# Server Credentials
 ServerCredentials.txt

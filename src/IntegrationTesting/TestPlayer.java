@@ -18,7 +18,7 @@ public class TestPlayer extends MessagingModule {
     }
 
     @Override
-    public void chatMessage(String source, String message) {
+    public void chatMessage(Boolean public_message, String source, String message) {
 
     }
 
