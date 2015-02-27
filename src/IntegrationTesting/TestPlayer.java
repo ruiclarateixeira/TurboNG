@@ -2,10 +2,7 @@ package IntegrationTesting;
 
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
-import TurboNGServer.Modules.InviteByUsernameModule;
-import TurboNGServer.Modules.MessagingModule;
-
-import java.lang.management.MemoryNotificationInfo;
+import TurboNGServer.ListenerModules.MessagingModule;
 
 /**
  * Created by ruijorgeclarateixeira on 16/11/14.

@@ -1,4 +1,4 @@
-package TurboNGServer.Modules;
+package TurboNGServer.ListenerModules;
 
 import TurboNGServer.Interface.Action;
 import TurboNGServer.Player.Player;
