@@ -1,0 +1,30 @@
+<project>
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+    
+    <target name="compile" depends="clean">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="TurboNGServer" destdir="build/classes">
+            <classpath>
+                <pathelement path="libraries/json-20140107.jar"/>
+            </classpath>
+        </javac>
+    </target>
+    
+    <target name="jar" depends="compile">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/TurboNG.jar" basedir="build/classes">
+            <zipgroupfileset dir="libraries" includes="**/*.jar"/>
+        </jar>
+    </target>
+
+    <target name="docgen">
+        <mkdir dir="docs"/>
+        <javadoc sourcepath="TurboNGServer" destdir="docs"/>
+    </target>
+
+    <target name="docrm">
+        <delete dir="docs"/>
+    </target>
+</project>

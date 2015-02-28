@@ -44,7 +44,6 @@ public abstract class Player {
 
     /**
      * Used in game. Order to get action from user received.
-     * @return action sent by the client.
      */
     public abstract void getAction();
 
