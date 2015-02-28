@@ -7,7 +7,7 @@
         <mkdir dir="build/classes"/>
         <javac srcdir="TurboNGServer" destdir="build/classes">
             <classpath>
-                <pathelement path="libraries/json-20140107.jar"/>
+                <pathelement path="libraries/json-20141113.jar"/>
             </classpath>
         </javac>
     </target>
@@ -23,7 +23,7 @@
         <mkdir dir="docs"/>
         <javadoc sourcepath="." destdir="docs">
             <classpath>
-                <pathelement path="libraries/json-20140107.jar"/>
+                <pathelement path="libraries/json-20141113.jar"/>
             </classpath>
         </javadoc>
     </target>
