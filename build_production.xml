@@ -21,7 +21,11 @@
 
     <target name="docgen">
         <mkdir dir="docs"/>
-        <javadoc sourcepath="TurboNGServer" destdir="docs"/>
+        <javadoc sourcepath="TurboNGServer" destdir="docs">
+            <classpath>
+                <pathelement path="libraries/json-20140107.jar"/>
+            </classpath>
+        </javadoc>
     </target>
 
     <target name="docrm">
