@@ -3,20 +3,16 @@ package IntegrationTesting;
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
 import TurboNGServer.ListenerModules.MessagingModule;
+import TurboNGServer.ListenerModules.UsernamePasswordLoginModule;
 
 /**
  * Created by ruijorgeclarateixeira on 16/11/14.
  * A Chess Player.
  */
 
-public class TestPlayer extends MessagingModule {
+public class TestPlayer extends UsernamePasswordLoginModule {
     public TestPlayer() {
         System.out.println("NEW TEST PLAYER");
-    }
-
-    @Override
-    public void chatMessage(Boolean public_message, String source, String message) {
-
     }
 
     @Override

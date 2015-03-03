@@ -24,8 +24,14 @@ build/*
 # SSL Keystores
 *.keys
 
+# .idea
+.idea
+
 # Configuration file
 src/IntegrationTesting/config.properties
 
 # Server Credentials
 ServerCredentials.txt
+
+# Databases
+db/
