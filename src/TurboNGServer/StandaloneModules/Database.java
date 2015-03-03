@@ -34,7 +34,7 @@ public class Database {
         try {
             Connection connection = GetConnection();
             Statement stmt = connection.createStatement();
-            System.out.println(stmt.executeUpdate(strStatement));
+            stmt.executeUpdate(strStatement);
             stmt.close();
             connection.close();
         } catch (SQLException e) {
