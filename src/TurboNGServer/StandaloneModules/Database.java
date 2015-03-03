@@ -51,19 +51,29 @@ public class Database {
      */
     public static String GetStringFromFirstRow(String query, String columnLabel) {
         Connection connection = GetConnection();
-
+        Statement stmt = null;
         try {
-            Statement stmt = connection.createStatement();
+            stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(query);
 
             if (!resultSet.isBeforeFirst())
                 return null;
 
             resultSet.next();
-            return resultSet.getString(columnLabel);
+            String result = resultSet.getString(columnLabel);
+            return result;
         } catch (SQLException e) {
             System.out.println("[Database] There was a problem executing the query!");
             e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -80,13 +90,23 @@ public class Database {
                         + " WHERE " + whereContent + ";";
 
         Connection connection = GetConnection();
+        Statement stmt = null;
         try {
-            Statement stmt = connection.createStatement();
+            stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(sql_query);
             return resultSet.getInt("total");
         } catch (SQLException e) {
             System.out.println("[Database] There was a problem executing the query!");
             e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return -1;
     }
