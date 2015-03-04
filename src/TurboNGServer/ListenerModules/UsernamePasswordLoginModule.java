@@ -43,6 +43,12 @@ public abstract class UsernamePasswordLoginModule extends Player {
     }
 
     /**
+     * Called when the user successfully logs in. The log in action is sent as parameter.
+     * @param action Successful login action.
+     */
+    public abstract void loggedIn(Action action);
+
+    /**
      * Executes a login action.
      * @param action Login Action
      */
@@ -57,23 +63,30 @@ public abstract class UsernamePasswordLoginModule extends Player {
             if (IsPlayerRegistered(action.getValueOf("username"))) {
                 if (action.getValueOf("password").equals(GetPasswordHashFor(action.getValueOf("username")))) {
                     this.username = action.getValueOf("username");
+                    loggedIn(action);
                     sendToClient(new Action("{type:login,action:login_successful,username:" + this.username + "}"));
                 }
                 else {
                     sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Wrong Password'}"));
                 }
+            } else {
+                sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Player not registered!'}"));
             }
         }
     }
 
     /**
      * Executes a register action.
+     * Username: Between 3 and 16 characters accepts alphanumeric characters, hyphens and underscores
+     * Password: Between 6 and 18 characters accepts alphanumeric characters, hyphens and underscores
      * @param action Register Action
+     * Regular expressions taken from:
      */
     private void register(Action action) {
-        /**** Check username against more strict rules with regex ****/
-        if (action.getValueOf("username") != null && action.getValueOf("password") != null
-                && !action.getValueOf("username").equals("") && !action.getValueOf("username").equals("")) {
+        if (action.getValueOf("username") != null
+                && action.getValueOf("password") != null
+                && !action.getValueOf("username").matches("^[a-z0-9_-]{3,16}$")
+                && !action.getValueOf("username").matches("^[a-z0-9_-]{6,18}$")) {
             if (!IsPlayerRegistered(action.getValueOf("username"))) {
                 RegisterPlayer(action.getValueOf("username"), action.getValueOf("password"));
                 sendToClient(new Action("{type:login,action:register_successful, username:"
@@ -82,6 +95,9 @@ public abstract class UsernamePasswordLoginModule extends Player {
             else {
                 sendToClient(new Action("{type:register,action:register_unsuccessful,message:'Username in use'}"));
             }
+        } else {
+            sendToClient(new Action("{type:register,action:register_unsuccessful,message:" +
+                                    "'Username and Password are not valid'}"));
         }
     }
 
