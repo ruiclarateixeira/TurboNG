@@ -115,10 +115,10 @@ public abstract class UsernamePasswordLoginModule extends Player {
                 registered(action);
             }
             else {
-                sendToClient(new Action("{type:register,action:register_unsuccessful,message:'Username in use'}"));
+                sendToClient(new Action("{type:login,action:register_unsuccessful,message:'Username in use'}"));
             }
         } else {
-            sendToClient(new Action("{type:register,action:register_unsuccessful,message:" +
+            sendToClient(new Action("{type:login,action:register_unsuccessful,message:" +
                                     "'Username and Password are not valid'}"));
         }
     }
