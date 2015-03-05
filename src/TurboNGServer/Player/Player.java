@@ -43,11 +43,6 @@ public abstract class Player {
     public abstract void gameStarted(Game requestingGame);
 
     /**
-     * Used in game. Order to get action from user received.
-     */
-    public abstract void getAction();
-
-    /**
      * Order to disconnect received.
      */
     public abstract void disconnect();
