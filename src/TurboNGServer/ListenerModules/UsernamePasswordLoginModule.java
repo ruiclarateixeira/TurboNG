@@ -10,9 +10,22 @@ import java.sql.SQLException;
 
 /**
  * Created by ruijorgeclarateixeira on 03/03/15.
- * Username needs to be alphanumeric.
+ * Username and Password Login Listener Module.
+ * Default:
+ * Username: Between 3 and 16 characters accepts alphanumeric characters, hyphens and underscores
+ * Password: Between 6 and 18 characters accepts alphanumeric characters, hyphens and underscores
  */
 public abstract class UsernamePasswordLoginModule extends Player {
+    /**
+     * Regex username is matched against on registering.
+     */
+    public static String usernameRegex = "^[a-z0-9_-]{3,16}$";
+
+    /**
+     * Regex password is matched against on registering.
+     */
+    public static String passwordRegex = "^[a-z0-9_-]{6,18}$";
+
     /**
      * Received action to execute.
      *
@@ -85,8 +98,8 @@ public abstract class UsernamePasswordLoginModule extends Player {
     private void register(Action action) {
         if (action.getValueOf("username") != null
                 && action.getValueOf("password") != null
-                && !action.getValueOf("username").matches("^[a-z0-9_-]{3,16}$")
-                && !action.getValueOf("username").matches("^[a-z0-9_-]{6,18}$")) {
+                && !action.getValueOf("username").matches(usernameRegex)
+                && !action.getValueOf("password").matches(passwordRegex)) {
             if (!IsPlayerRegistered(action.getValueOf("username"))) {
                 RegisterPlayer(action.getValueOf("username"), action.getValueOf("password"));
                 sendToClient(new Action("{type:login,action:register_successful, username:"
