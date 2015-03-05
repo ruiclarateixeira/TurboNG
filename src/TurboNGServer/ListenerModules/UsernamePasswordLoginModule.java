@@ -106,20 +106,21 @@ public abstract class UsernamePasswordLoginModule extends Player {
      * Regular expressions taken from:
      */
     private void register(Action action) {
-        if (action.getValueOf("username") != null
-                && action.getValueOf("password") != null
-                && !action.getValueOf("username").matches(usernameRegex)
-                && !action.getValueOf("password").matches(passwordRegex)) {
-            if (!IsPlayerRegistered(action.getValueOf("username"))) {
-                RegisterPlayer(action.getValueOf("username"), action.getValueOf("password"));
-                registered(action);
-            }
-            else {
-                sendToClient(new Action("{type:login,action:register_unsuccessful,message:'Username in use'}"));
-            }
-        } else {
-            sendToClient(new Action("{type:login,action:register_unsuccessful,message:" +
-                                    "'Username and Password are not valid'}"));
+        if (action.getValueOf("username") == null || !action.getValueOf("username").matches(usernameRegex)) {
+            sendToClient(new Action("{type:login,action:register_unsuccessful,message:'Username Invalid.'}"));
+            return;
+        }
+        else if (action.getValueOf("password") == null || !action.getValueOf("password").matches(passwordRegex)) {
+            sendToClient(new Action("{type:login,action:register_unsuccessful,message:'Password Invalid.'}"));
+            return;
+        }
+
+        if (!IsPlayerRegistered(action.getValueOf("username"))) {
+            RegisterPlayer(action.getValueOf("username"), action.getValueOf("password"));
+            registered(action);
+        }
+        else {
+            sendToClient(new Action("{type:login,action:register_unsuccessful,message:'Username in use'}"));
         }
     }
 
