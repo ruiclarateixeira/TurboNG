@@ -59,7 +59,18 @@ public abstract class UsernamePasswordLoginModule extends Player {
      * Called when the user successfully logs in. The log in action is sent as parameter.
      * @param action Successful login action.
      */
-    public abstract void loggedIn(Action action);
+    public void loggedIn(Action action) {
+        sendToClient(new Action("{type:login,action:login_successful,username:" + this.username + "}"));
+    }
+
+    /**
+     * Called when the user successfully registers.
+     * @param action Successful register action.
+     */
+    public void registered(Action action) {
+        sendToClient(new Action("{type:login,action:register_successful, username:"
+                + action.getValueOf("username") + " }"));
+    }
 
     /**
      * Executes a login action.
@@ -77,7 +88,6 @@ public abstract class UsernamePasswordLoginModule extends Player {
                 if (action.getValueOf("password").equals(GetPasswordHashFor(action.getValueOf("username")))) {
                     this.username = action.getValueOf("username");
                     loggedIn(action);
-                    sendToClient(new Action("{type:login,action:login_successful,username:" + this.username + "}"));
                 }
                 else {
                     sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Wrong Password'}"));
@@ -102,8 +112,7 @@ public abstract class UsernamePasswordLoginModule extends Player {
                 && !action.getValueOf("password").matches(passwordRegex)) {
             if (!IsPlayerRegistered(action.getValueOf("username"))) {
                 RegisterPlayer(action.getValueOf("username"), action.getValueOf("password"));
-                sendToClient(new Action("{type:login,action:register_successful, username:"
-                        + action.getValueOf("username") + " }"));
+                registered(action);
             }
             else {
                 sendToClient(new Action("{type:register,action:register_unsuccessful,message:'Username in use'}"));
