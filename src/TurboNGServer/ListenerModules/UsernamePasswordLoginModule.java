@@ -68,6 +68,7 @@ public abstract class UsernamePasswordLoginModule extends Player {
      * @param action Successful register action.
      */
     public void registered(Action action) {
+        RegisterPlayer(action.getValueOf("username"), action.getValueOf("password"));
         sendToClient(new Action("{type:login,action:register_successful, username:"
                 + action.getValueOf("username") + " }"));
     }
@@ -116,7 +117,6 @@ public abstract class UsernamePasswordLoginModule extends Player {
         }
 
         if (!IsPlayerRegistered(action.getValueOf("username"))) {
-            RegisterPlayer(action.getValueOf("username"), action.getValueOf("password"));
             registered(action);
         }
         else {
