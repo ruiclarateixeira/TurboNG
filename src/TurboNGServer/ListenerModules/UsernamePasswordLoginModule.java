@@ -101,9 +101,7 @@ public abstract class UsernamePasswordLoginModule extends Player {
     }
 
     /**
-     * Executes a register action.
-     * Username: Between 3 and 16 characters accepts alphanumeric characters, hyphens and underscores
-     * Password: Between 6 and 18 characters accepts alphanumeric characters, hyphens and underscores
+     * Executes a register action. Uses regex defined as class variable.
      * @param action Register Action
      * Regular expressions taken from:
      */
