@@ -60,6 +60,8 @@ public abstract class UsernamePasswordLoginModule extends Player {
      * @param action Successful login action.
      */
     public void loggedIn(Action action) {
+        this.username = action.getValueOf("username");
+        addToOnlinePlayers();
         sendToClient(new Action("{type:login,action:login_successful,username:" + this.username + "}"));
     }
 
@@ -87,7 +89,6 @@ public abstract class UsernamePasswordLoginModule extends Player {
 
             if (IsPlayerRegistered(action.getValueOf("username"))) {
                 if (action.getValueOf("password").equals(GetPasswordHashFor(action.getValueOf("username")))) {
-                    this.username = action.getValueOf("username");
                     loggedIn(action);
                 }
                 else {
