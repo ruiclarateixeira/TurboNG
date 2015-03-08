@@ -113,4 +113,8 @@ public abstract class Player {
             this.game.join(this);
         }
     }
+
+    public String toJsonString() {
+        return "{username:" + this.username + "}";
+    }
 }
