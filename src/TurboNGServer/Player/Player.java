@@ -101,7 +101,9 @@ public abstract class Player {
      * @param action Action to send.
      */
     public void sendToClient(Action action) {
-        playerLobby.sendToClient(action);
+        if (playerLobby != null) {
+            playerLobby.sendToClient(action);
+        }
     }
 
     /**
