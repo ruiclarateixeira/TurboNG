@@ -2,7 +2,6 @@ package TurboNGServer.ListenerModules;
 
 import TurboNGServer.Interface.Action;
 import TurboNGServer.Player.Player;
-import TurboNGServer.Player.PlayersManager;
 import TurboNGServer.StandaloneModules.Database;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ public abstract class FriendsModule extends Player {
 
         switch (action.getValueOf("action")) {
             case "add_friend":
-                System.out.println(action.getValueOf("username"));
                 if (action.getValueOf("username") != null
                         && action.getValueOf("username").matches(usernameRegex)) {
                     addFriend(action.getValueOf("username"));
