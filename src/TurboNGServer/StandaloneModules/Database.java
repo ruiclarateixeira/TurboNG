@@ -85,7 +85,7 @@ public class Database {
      * @return Number of rows in the result. Returns -1 if there are any errors executing statement.
      */
     public static int RowCountFromWhere(String fromContent, String whereContent) {
-        String sql_query = "SELECT COUNT(USERNAME) as total"
+        String sql_query = "SELECT COUNT(*) as total"
                         + " FROM " + fromContent
                         + " WHERE " + whereContent + ";";
 
