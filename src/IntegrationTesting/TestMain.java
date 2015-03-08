@@ -1,5 +1,7 @@
 package IntegrationTesting;
 
+import TurboNGServer.Player.IPlayerFactory;
+import TurboNGServer.Player.Player;
 import TurboNGServer.TurboNGServer;
 
 /**
@@ -8,6 +10,11 @@ import TurboNGServer.TurboNGServer;
 public class TestMain {
     public static void main(String[] args) {
         TurboNGServer gameServer = new TurboNGServer("/Users/ruijorgeclarateixeira/Development/TurboNGServer/src/IntegrationTesting/config.properties", null);
-        gameServer.start(new TestPlayerFactory());
+        gameServer.start(new IPlayerFactory() {
+            @Override
+            public Player instantiatePlayer() {
+                return new TestPlayer("Rui");
+            }
+        });
     }
 }
