@@ -14,6 +14,10 @@ import java.util.ArrayList;
 */
 public abstract class Player {
     /**
+     * Regex username is matched against on registering.
+     */
+    public static String usernameRegex = "^[a-z0-9_-]{3,16}$";
+    /**
      * Player's username. Every player needs to have a string username.
      */
     public String username = null;

@@ -17,11 +17,6 @@ import java.sql.SQLException;
  */
 public abstract class UsernamePasswordLoginModule extends Player {
     /**
-     * Regex username is matched against on registering.
-     */
-    public static String usernameRegex = "^[a-z0-9_-]{3,16}$";
-
-    /**
      * Regex password is matched against on registering.
      */
     public static String passwordRegex = "^[a-z0-9_-]{6,18}$";
