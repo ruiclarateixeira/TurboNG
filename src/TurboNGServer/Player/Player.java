@@ -114,6 +114,10 @@ public abstract class Player {
         }
     }
 
+    /**
+     * Returns a json representation of the player.
+     * @return Json representation of th player.
+     */
     public String toJsonString() {
         return "{username:" + this.username + "}";
     }
