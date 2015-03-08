@@ -1,6 +1,7 @@
 package TurboNGServer.StandaloneModules;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by ruijorgeclarateixeira on 03/03/15.
@@ -60,8 +61,7 @@ public class Database {
                 return null;
 
             resultSet.next();
-            String result = resultSet.getString(columnLabel);
-            return result;
+            return resultSet.getString(columnLabel);
         } catch (SQLException e) {
             System.out.println("[Database] There was a problem executing the query!");
             e.printStackTrace();
@@ -109,5 +109,44 @@ public class Database {
             }
         }
         return -1;
+    }
+
+    /**
+     * Gets all the occorrences of a column and returns them in an array
+     * @param tableName Name of table to execute the query on.
+     * @param columnLabel Name of the column to get the occurrences from
+     * @param whereContent Content of where statement to use when querying the table.
+     * @return List of occurrences that match the query. Empty list if nothing is found.
+     */
+    public static ArrayList<String> GetStringsFromColumn(String tableName, String columnLabel, String whereContent) {
+        ArrayList<String> result = new ArrayList<>();
+
+        String sql_query = "SELECT " + columnLabel
+                            + " FROM " + tableName
+                            + " WHERE " + whereContent + ";";
+
+        Connection connection = GetConnection();
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(sql_query);
+
+            while (resultSet.next()) {
+                result.add(resultSet.getString(columnLabel));
+            }
+        } catch (SQLException e) {
+            System.out.println("[Database] There was a problem executing the query!");
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 }
