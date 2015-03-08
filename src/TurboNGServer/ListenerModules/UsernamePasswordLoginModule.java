@@ -16,6 +16,11 @@ import java.sql.SQLException;
  * Password: Between 6 and 18 characters accepts alphanumeric characters, hyphens and underscores
  */
 public abstract class UsernamePasswordLoginModule extends Player {
+    public static String createUsernamePasswordTableQuery = "CREATE TABLE PLAYERS " +
+            "(USERNAME      TEXT            NOT NULL, " +
+            " PASSWORD      NVARCHAR(128)   NOT NULL, " +
+            " PRIMARY KEY(USERNAME))";
+
     /**
      * Regex password is matched against on registering.
      */
@@ -122,11 +127,7 @@ public abstract class UsernamePasswordLoginModule extends Player {
      * Creates the table for players needed to store the login credentials
      */
     public static void CreatePlayersDBTable() {
-        String sql_statement = "CREATE TABLE PLAYERS " +
-                "(USERNAME      TEXT            NOT NULL, " +
-                " PASSWORD      NVARCHAR(128)   NOT NULL, " +
-                " PRIMARY KEY(USERNAME))";
-        Database.ExecuteStatement(sql_statement);
+        Database.ExecuteStatement(createUsernamePasswordTableQuery);
     }
 
     /**
