@@ -2,6 +2,7 @@ package IntegrationTesting;
 
 import TurboNGServer.Game.Game;
 import TurboNGServer.Interface.Action;
+import TurboNGServer.ListenerModules.FriendsModule;
 import TurboNGServer.ListenerModules.MessagingModule;
 import TurboNGServer.ListenerModules.UsernamePasswordLoginModule;
 
@@ -10,11 +11,13 @@ import TurboNGServer.ListenerModules.UsernamePasswordLoginModule;
  * A Chess Player.
  */
 
-public class TestPlayer extends UsernamePasswordLoginModule {
+public class TestPlayer extends FriendsModule {
     public TestPlayer() {
         System.out.println("NEW TEST PLAYER");
     }
-
+    public TestPlayer(String name) {
+        this.username = name;
+    }
     @Override
     public boolean executeAction(Action action) {
         if(super.executeAction(action))
@@ -45,11 +48,6 @@ public class TestPlayer extends UsernamePasswordLoginModule {
 
     @Override
     public void gameStarted(Game requestingGame) {
-
-    }
-
-    @Override
-    public void getAction() {
 
     }
 
