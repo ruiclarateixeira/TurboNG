@@ -2,7 +2,10 @@ package TurboNGServer.ListenerModules;
 
 import TurboNGServer.Interface.Action;
 import TurboNGServer.Player.Player;
+import TurboNGServer.Player.PlayersManager;
 import TurboNGServer.StandaloneModules.Database;
+
+import java.util.ArrayList;
 
 /**
  * Created by ruijorgeclarateixeira on 08/03/15.
@@ -10,11 +13,6 @@ import TurboNGServer.StandaloneModules.Database;
  * Requires a database to store friends relationship.
  */
 public abstract class FriendsModule extends Player {
-    /**
-     * Regex username is matched against on registering.
-     */
-    public static String usernameRegex = "^[a-z0-9_-]{3,16}$";
-
     /**
      * Received action to execute.
      *
@@ -33,7 +31,9 @@ public abstract class FriendsModule extends Player {
 
         switch (action.getValueOf("action")) {
             case "add_friend":
-                if (action.getValueOf("username") != null && action.getValueOf("username").matches(usernameRegex)) {
+                System.out.println(action.getValueOf("username"));
+                if (action.getValueOf("username") != null
+                        && action.getValueOf("username").matches(usernameRegex)) {
                     addFriend(action.getValueOf("username"));
                 } else {
                     sendToClient(new Action("{type:friends,action:friend_not_added,message:'Invalid friend username'}"));
@@ -46,10 +46,13 @@ public abstract class FriendsModule extends Player {
                     sendToClient(new Action("{type:friends,action:friend_not_removed,message:'Invalid friend username'}"));
                 }
                 break;
+            case "show_friends":
+                ArrayList<String> friends = getFriends();
+                sendFriends(friends);
+                break;
             default:
                 sendToClient(new Action("{type:friends,action:not_recognized}"));
         }
-
         return true;
     }
 
@@ -105,6 +108,31 @@ public abstract class FriendsModule extends Player {
      */
     public void friendRemoved(String friendUsername) {
         sendToClient(new Action("{type:friends,action:friend_removed,username:" + friendUsername + "}"));
+    }
+
+    /**
+     * Gets friends from database
+     * @return List of friends' usernames
+     */
+    public ArrayList<String> getFriends() {
+        return Database.GetStringsFromColumn("FRIENDS", "FRIEND_USERNAME", "PLAYER_USERNAME = '" + this.username + "'");
+    }
+
+    /**
+     * Send friends list to client
+     * @param friends List of friends' usernames
+     */
+    public void sendFriends(ArrayList<String> friends) {
+        String friendsStr = "[";
+        for (String friendUsername : friends) {
+            friendsStr += (friendUsername + ",");
+        }
+        if (friendsStr.length() > 1) {
+            friendsStr = friendsStr.substring(0, friendsStr.length()-1);
+        }
+        friendsStr += "]";
+        System.out.println("{type:friends,action:show_friends,friends:" + friendsStr + "}");
+        sendToClient(new Action("{type:friends,action:show_friends,friends:" + friendsStr + "}"));
     }
 
     /**
