@@ -128,9 +128,9 @@ public abstract class UsernamePasswordLoginModule extends Player {
      */
     public static void CreatePlayersDBTable() {
         String sql_statement = "CREATE TABLE PLAYERS " +
-                "(ROWID INTEGER PRIMARY KEY     AUTOINCREMENT," +
-                " USERNAME           TEXT    NOT NULL, " +
-                " PASSWORD       NVARCHAR(128))";
+                "(USERNAME      TEXT            NOT NULL, " +
+                " PASSWORD      NVARCHAR(128)   NOT NULL, " +
+                " PRIMARY KEY(USERNAME))";
         Database.ExecuteStatement(sql_statement);
     }
 
