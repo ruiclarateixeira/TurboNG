@@ -65,6 +65,22 @@ public class Action {
         }
     }
 
+    /**
+     * Adds a given object into the json object. Creates an empty one and adds to it
+     * if current object is not valid.
+     * @param key Object's Key
+     * @param array Array
+     */
+    public void addArray(String key, Object[] array) {
+        if(!this.isValid()) {
+            this.jsonMessage = new JSONObject("{}");
+        }
+
+        if(key != null && array != null) {
+            jsonMessage.put(key, array);
+        }
+    }
+
     @Override
     public String toString() {
         if(jsonMessage != null)
