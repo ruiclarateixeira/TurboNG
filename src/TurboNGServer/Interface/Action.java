@@ -55,7 +55,7 @@ public class Action {
      * @param key Object's Key
      * @param value Object's value
      */
-    public void addObject(String key, String value) {
+    public void addObject(String key, Object value) {
         if(!this.isValid()) {
             this.jsonMessage = new JSONObject("{}");
         }
