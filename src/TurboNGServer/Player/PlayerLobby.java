@@ -86,7 +86,12 @@ public class PlayerLobby implements Callable<Void> {
      */
     public void sendToPlayer(Action action) {
         if(action.isValid()) {
-            player.executeAction(action);
+            try {
+                player.executeAction(action);
+            } catch (RuntimeException e) {
+                System.err.println("[ExecuteAction] Error executing action!");
+                e.printStackTrace();
+            }
         }
         else {
             sendToClient(Action.ERROR_102_ILLEGAL_FORMAT);
