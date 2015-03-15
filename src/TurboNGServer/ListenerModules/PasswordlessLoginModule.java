@@ -52,6 +52,7 @@ public abstract class PasswordlessLoginModule extends Player {
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (KeyAlreadyExistsException e) {
+            this.username = null;
             sendToClient(new Action("{type:login, action:username_exists}"));
         }
     }
