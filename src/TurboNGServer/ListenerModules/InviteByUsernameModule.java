@@ -14,16 +14,28 @@ public abstract class InviteByUsernameModule extends Player {
         if (super.executeAction(action))
             return true;
 
-        if (action.getValueOf("type") != null && action.getValueOf("type").equals("invite")) {
+        if (action == null) {
+            return false;
+        }
+
+        if (action.getValueOf("type") != null
+                && action.getValueOf("type").equals("invite")
+                && action.getValueOf("action") != null) {
             switch (action.getValueOf("action")) {
                 case "invite":
                     if (action.getValueOf("target") != null) {
                         sendGameInvite(action.getValueOf("target"));
                     }
+                    else {
+                        sendToClient(new Action("{type:invite,action:not_invited,message:'Invalid Target'}"));
+                    }
                     break;
                 case "accept":
                     if (action.getValueOf("source") != null) {
                         acceptInviteFrom(action.getValueOf("source"));
+                    }
+                    else {
+                        sendToClient(new Action("{type:invite,action:not_accepted,message:'Invalid Source'}"));
                     }
             }
             return true;
@@ -37,8 +49,13 @@ public abstract class InviteByUsernameModule extends Player {
      * @param source Source of the invitation.
      */
     public void acceptInviteFrom(String source) {
-        this.game = PlayersManager.getPlayer(source).game;
-        this.game.join(this);
+        if (PlayersManager.getPlayer(source) != null) {
+            this.game = PlayersManager.getPlayer(source).game;
+            this.game.join(this);
+        }
+        else {
+            sendToClient(new Action("{type:invite,action:not_accepted,message:'Invalid Source'}"));
+        }
     }
 
     /**
