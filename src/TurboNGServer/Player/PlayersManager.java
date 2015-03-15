@@ -20,6 +20,8 @@ public class PlayersManager {
      * @return Required player.
      */
     public static Player getPlayer(String username) {
+        if (username == null)
+            return null;
         return onlinePLayers.get(username);
     }
 
@@ -28,7 +30,7 @@ public class PlayersManager {
      * @param player Player to be added.
      */
     public static void addPlayer(Player player) throws KeyAlreadyExistsException, NullPointerException {
-        if(player.username == null) {
+        if(player == null || player.username == null) {
             throw new NullPointerException("Username cannot be null!");
         }
 
@@ -43,6 +45,8 @@ public class PlayersManager {
      * @param username Player to be removed username.
      */
     public static void removePlayer(String username) {
+        if (username == null)
+            return;
         onlinePLayers.remove(username);
     }
 
