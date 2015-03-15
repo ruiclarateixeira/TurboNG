@@ -30,8 +30,6 @@ public class TurboNGServer {
         Settings.Load(propertiesPath);
 
         if(!Settings.validSettings) {
-            System.err.println("[CreateServer] Invalid settings in config.properties!"
-                                + "\n[CreateServer] Server not started!");
             return;
         }
 
