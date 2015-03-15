@@ -27,6 +27,10 @@ public class PlayerLobby implements Callable<Void> {
     Player player;
 
     public PlayerLobby(IPlayerFactory playerFactory) {
+        if (playerFactory == null) {
+            System.err.println("[PlayerLobby] Null Player Factory.");
+            return;
+        }
         player = playerFactory.instantiatePlayer();
     }
 
@@ -56,10 +60,13 @@ public class PlayerLobby implements Callable<Void> {
      */
     @Override
     public Void call() {
-        player.setPlayerLobby(this);
+        try {
+            player.setPlayerLobby(this);
+        } catch (RuntimeException e) {
+            return null;
+        }
 
         if(bufReader == null || bufWriter == null) {
-            System.out.println("No socket given to PlayerLobby.");
             return null;
         }
 
