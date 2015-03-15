@@ -20,12 +20,18 @@ public abstract class FriendsModule extends Player {
      */
     @Override
     public boolean executeAction(Action action) {
+        if (action == null)
+            return false;
+
         if(super.executeAction(action))
             return true;
+        else if (this.username == null) {
+            sendToClient(new Action("{type:friends,action:friend_not_added,message:'Not logged in'}"));
+            return false;
+        }
         else if (action.getValueOf("type") == null
                 || action.getValueOf("action") == null
-                || !action.getValueOf("type").equals("friends")
-                || this.username == null)
+                || !action.getValueOf("type").equals("friends"))
             return false;
 
         switch (action.getValueOf("action")) {
