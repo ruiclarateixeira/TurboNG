@@ -67,6 +67,9 @@ public abstract class Player {
      * @return True if this method can execute the action. False otherwise.
      */
     public boolean executeAction(Action action) {
+        if (action == null)
+            return false;
+
         if(action.getValueOf("action") != null) {
             if(action.getValueOf("action").equals("showonline")) {
                 ArrayList<Player> players = PlayersManager.getAllPlayers();
@@ -105,7 +108,7 @@ public abstract class Player {
      * @param action Action to send.
      */
     public void sendToClient(Action action) {
-        if (playerLobby != null) {
+        if (playerLobby != null && action != null) {
             playerLobby.sendToClient(action);
         }
     }
