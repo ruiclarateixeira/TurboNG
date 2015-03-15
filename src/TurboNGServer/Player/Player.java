@@ -16,7 +16,7 @@ public abstract class Player {
     /**
      * Regex username is matched against on registering.
      */
-    public static String usernameRegex = "^[a-z0-9_-]{3,16}$";
+    public static String usernameRegex = "^([a-z][a-z0-9_-]{2,15})|([a-z0-9_-]{1,7}[a-z][a-z0-9_-]{1,8})$";
     /**
      * Player's username. Every player needs to have a string username.
      */
