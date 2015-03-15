@@ -29,7 +29,16 @@ public class ConnectionHandler {
      * @param serverSocket Socket the connection handler listens to.
      * @param playerFactory Instance of a player factory.
      */
-    public static void start(ExecutorService pool, ServerSocket serverSocket, IPlayerFactory playerFactory) {
+    public static void Start(ExecutorService pool, ServerSocket serverSocket, IPlayerFactory playerFactory) {
+        if (pool == null || serverSocket == null || playerFactory == null) {
+            System.err.println("[ConnectionHandler] Couldn't start handler");
+            return;
+        }
+        else if (playerFactory.instantiatePlayer() == null) {
+            System.err.println("[ConnectionHandler] Invalid Player Factory");
+            return;
+        }
+
         while(serverRunning) {
             try {
                 Socket clientSocket = serverSocket.accept(); // BLOCKS EXECUTION

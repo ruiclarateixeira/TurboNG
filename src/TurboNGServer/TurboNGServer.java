@@ -3,6 +3,7 @@ package TurboNGServer;
 import TurboNGServer.Networking.ConnectionHandler;
 import TurboNGServer.Networking.TurboNGServerSocketFactory;
 import TurboNGServer.Player.IPlayerFactory;
+import TurboNGServer.Player.Player;
 import TurboNGServer.ServerSettings.Settings;
 
 import java.io.IOException;
@@ -55,6 +56,15 @@ public class TurboNGServer {
      */
     public void start(IPlayerFactory playerFactory) {
         try {
+            try  {
+                Player player = playerFactory.instantiatePlayer();
+                if (player == null)
+                    throw new RuntimeException("Player is null");
+            } catch (RuntimeException e) {
+                System.out.println("[StartServer] Invalid Player Factory");
+                return;
+            }
+
             if(!Settings.validSettings) {
                 System.err.println("[StartServer] Invalid Settings.");
                 return;
@@ -64,7 +74,7 @@ public class TurboNGServer {
                 System.out.println("[StartServer] Starting game server.");
                 System.out.println("[StartServer] Socket listening on " + serverSocket.getLocalPort());
                 System.out.println("[StartServer] Starting Connection Handler with Thread Pool of size " + Settings.NumberOfThreads);
-                ConnectionHandler.start(initThreadPool(Settings.NumberOfThreads), serverSocket, playerFactory);
+                ConnectionHandler.Start(initThreadPool(Settings.NumberOfThreads), serverSocket, playerFactory);
             }
             else {
                 System.err.println("[StartServer] Socket not created!");
