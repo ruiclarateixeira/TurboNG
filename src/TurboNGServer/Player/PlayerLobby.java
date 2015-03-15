@@ -92,7 +92,7 @@ public class PlayerLobby implements Callable<Void> {
      * @param action Action to be sent.
      */
     public void sendToPlayer(Action action) {
-        if(action.isValid()) {
+        if(action != null && action.isValid()) {
             try {
                 player.executeAction(action);
             } catch (RuntimeException e) {
@@ -111,13 +111,15 @@ public class PlayerLobby implements Callable<Void> {
      */
     public void sendToClient(Action action) {
         try {
-            if(action.isValid()) {
+            if(action != null && action.isValid()) {
                 bufWriter.write(action.toString());
                 bufWriter.newLine();
                 bufWriter.flush();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("[PlayerLobby] Could not write to socket");
+        } catch (NullPointerException e) {
+            System.err.println("[PlayerLobby] Writer is null");
         }
     }
 }
