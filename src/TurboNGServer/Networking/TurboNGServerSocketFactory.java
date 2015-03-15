@@ -30,7 +30,7 @@ public class TurboNGServerSocketFactory {
         SSLServerSocketFactory factory;
         try {
             if (Settings.SSL) {
-                if(Settings.SSLKeysPath == null) {
+                if(Settings.SSLKeysPath == null || Settings.SSLKeysPath.equals("")) {
                     System.err.println("Provide a path to the SSL keystore!");
                     return null;
                 }
@@ -45,7 +45,11 @@ public class TurboNGServerSocketFactory {
 
                 KeyStore ks = KeyStore.getInstance("JKS");
 
-                ks.load(new FileInputStream(Settings.SSLKeysPath), sslPassword);
+                try {
+                    ks.load(new FileInputStream(Settings.SSLKeysPath), sslPassword);
+                } catch (FileNotFoundException e) {
+                    System.err.println("Wrong file path!");
+                }
                 kmf.init(ks, sslPassword);
                 context.init(kmf.getKeyManagers(), null, null);
 
@@ -55,8 +59,8 @@ public class TurboNGServerSocketFactory {
             else {
                 return new ServerSocket(Settings.ListeningPort);
             }
-        } catch (NoSuchAlgorithmException | UnrecoverableKeyException | KeyManagementException | KeyStoreException | CertificateException e) {
-            e.printStackTrace();
+        } catch (IOException | NoSuchAlgorithmException | UnrecoverableKeyException | KeyManagementException | KeyStoreException | CertificateException e) {
+            System.err.println("Could not create SSL Socket");
         }
 
         return null;
