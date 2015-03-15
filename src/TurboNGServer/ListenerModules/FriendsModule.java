@@ -96,11 +96,9 @@ public abstract class FriendsModule extends Player {
                 + "' AND FRIEND_USERNAME = '"
                 + friendUsername + "'");
 
-        System.out.println(noOfRows);
         if (noOfRows > 0) {
             String sql_statement = "DELETE FROM FRIENDS WHERE PLAYER_USERNAME = '"
                     + this.username + "' AND FRIEND_USERNAME = '" + friendUsername + "';";
-            System.out.println(sql_statement);
             Database.ExecuteStatement(sql_statement);
             friendRemoved(friendUsername);
         }
