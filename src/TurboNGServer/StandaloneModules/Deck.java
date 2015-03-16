@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class Deck {
     ArrayList<Card> deck;
-    String[] suits = {"spades","clubs","diamonds","hearts"};
+    public static String[] Suits = {"spades","clubs","diamonds","hearts"};
     Random randomGenerator;
 
     /**
@@ -63,7 +63,7 @@ public class Deck {
     public Deck () {
         deck = new ArrayList<>(52);
         randomGenerator = new XORShiftRandom();
-        for (String suit : suits) {
+        for (String suit : Suits) {
             for (int number = 1; number < 14; number++) {
                 deck.add(new Card(number, suit));
             }
