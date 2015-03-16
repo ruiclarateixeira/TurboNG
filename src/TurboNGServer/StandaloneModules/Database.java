@@ -32,6 +32,10 @@ public class Database {
      * @param strStatement SQL formatted statement.
      */
     public static void ExecuteStatement(String strStatement) {
+        if (strStatement == null) {
+            System.out.println("[Database] Null Statement");
+            return;
+        }
         try {
             Connection connection = GetConnection();
             Statement stmt = connection.createStatement();
@@ -85,6 +89,11 @@ public class Database {
      * @return Number of rows in the result. Returns -1 if there are any errors executing statement.
      */
     public static int RowCountFromWhere(String fromContent, String whereContent) {
+        if (fromContent == null || whereContent == null) {
+            System.out.println("[Database] Inputs cannot be null");
+            return -1;
+        }
+
         String sql_query = "SELECT COUNT(*) as total"
                         + " FROM " + fromContent
                         + " WHERE " + whereContent + ";";
@@ -120,6 +129,10 @@ public class Database {
      */
     public static ArrayList<String> GetStringsFromColumn(String tableName, String columnLabel, String whereContent) {
         ArrayList<String> result = new ArrayList<>();
+
+        if (tableName == null || columnLabel == null || whereContent == null) {
+            return result;
+        }
 
         String sql_query = "SELECT " + columnLabel
                             + " FROM " + tableName
