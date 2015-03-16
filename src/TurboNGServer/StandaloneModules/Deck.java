@@ -35,6 +35,10 @@ public class Deck {
         }
     }
 
+    public Card instantiateCard(int number, String suit) {
+        return new Card(number, suit);
+    }
+
     /**
      * Random number generator using XORShift Number Generator Algorithms
      * Code from: http://www.javamex.com/tutorials/random_numbers/java_util_random_subclassing.shtml
