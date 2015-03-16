@@ -2,6 +2,7 @@ package TurboNGServer.ListenerModules;
 
 import TurboNGServer.Interface.Action;
 import TurboNGServer.Player.Player;
+import TurboNGServer.Player.PlayersManager;
 import TurboNGServer.StandaloneModules.Database;
 
 import java.sql.Connection;
@@ -37,7 +38,10 @@ public abstract class UsernamePasswordLoginModule extends Player {
         if (super.executeAction(action))
             return true;
 
-        if (action.getValueOf("type") != null && action.getValueOf("type").equals("login")) {
+        if (action != null
+                && action.getValueOf("type") != null
+                && action.getValueOf("action") != null
+                && action.getValueOf("type").equals("login")) {
             switch (action.getValueOf("action")) {
                 case "login":
                     login(action);
@@ -80,27 +84,37 @@ public abstract class UsernamePasswordLoginModule extends Player {
      * @param action Login Action
      */
     private void login(Action action) {
-        if (action.getValueOf("username") != null && action.getValueOf("password") != null) {
-            if (action.getValueOf("username") == null || !action.getValueOf("username").matches(usernameRegex)) {
-                sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Username Invalid.'}"));
-                return;
-            }
-            // Check if already logged in
-            if (this.username != null) {
-                sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Already Logged In'}"));
-                return;
-            }
+        // Check validity of username and password
+        if (action.getValueOf("username") == null || !action.getValueOf("username").matches(usernameRegex)) {
+            sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Username Invalid.'}"));
+            return;
+        }
+        else if (action.getValueOf("password") == null) {
+            sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Password Invalid.'}"));
+            return;
+        }
 
-            if (IsPlayerRegistered(action.getValueOf("username"))) {
-                if (action.getValueOf("password").equals(GetPasswordHashFor(action.getValueOf("username")))) {
-                    loggedIn(action);
+        // Check if already logged in
+        if (this.username != null) {
+            sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Already Logged In'}"));
+            return;
+        }
+
+        // Login if player is registered
+        if (IsPlayerRegistered(action.getValueOf("username"))) {
+            if (action.getValueOf("password").equals(GetPasswordHashFor(action.getValueOf("username")))) {
+                if (PlayersManager.getPlayer(action.getValueOf("username")) != null) {
+                    sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Account in use'}"));
                 }
                 else {
-                    sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Wrong Password'}"));
+                    loggedIn(action);
                 }
-            } else {
-                sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Player not registered!'}"));
             }
+            else {
+                sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Wrong Password'}"));
+            }
+        } else {
+            sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Player not registered!'}"));
         }
     }
 
