@@ -81,6 +81,10 @@ public abstract class UsernamePasswordLoginModule extends Player {
      */
     private void login(Action action) {
         if (action.getValueOf("username") != null && action.getValueOf("password") != null) {
+            if (action.getValueOf("username") == null || !action.getValueOf("username").matches(usernameRegex)) {
+                sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Username Invalid.'}"));
+                return;
+            }
             // Check if already logged in
             if (this.username != null) {
                 sendToClient(new Action("{type:login,action:login_unsuccessful,message:'Already Logged In'}"));
