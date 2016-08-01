@@ -9,16 +9,19 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.security.*;
 import java.security.cert.CertificateException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by ruijorgeclarateixeira on 29/09/14.
  *
  */
 public class TurboNGServerSocketFactory {
+    private static final Logger LOGGER = Logger.getLogger("TurboNGServerSocketFactory");
     /**
      * Algorithm used when secure socket is required. Hardcoded as SSL.
      */
-    private final static String algorithm = "SSL";
+    private final static String SSL_ALGORITHM = "SSL";
 
     /**
      * Creates a SSLServerSocket
@@ -26,41 +29,41 @@ public class TurboNGServerSocketFactory {
      * @param sslPassword Password for the ssl keystore. Null if no SSL connection required.
      * @return - Returns the created socket or null if a problem is found
      */
-    public static ServerSocket createNGServerSocket(char[] sslPassword) throws IOException {
+    public static ServerSocket createNGServerSocket(Settings settings, char[] sslPassword) throws IOException {
         SSLServerSocketFactory factory;
         try {
-            if (Settings.SSL) {
-                if(Settings.SSLKeysPath == null || Settings.SSLKeysPath.equals("")) {
-                    System.err.println("Provide a path to the SSL keystore!");
+            if (settings.isSSL()) {
+                if(settings.getSslKeysPath() == null || settings.getSslKeysPath().equals("")) {
+                    LOGGER.log(Level.SEVERE, "Provide a path to the SSL keystore!");
                     return null;
                 }
                 else if(sslPassword == null) {
-                    System.err.println("Provide keystore password!");
+                    LOGGER.log(Level.SEVERE, "Provide keystore password!");
                     return null;
                 }
 
-                SSLContext context = SSLContext.getInstance(algorithm);
+                SSLContext context = SSLContext.getInstance(SSL_ALGORITHM);
 
                 KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 
                 KeyStore ks = KeyStore.getInstance("JKS");
 
                 try {
-                    ks.load(new FileInputStream(Settings.SSLKeysPath), sslPassword);
+                    ks.load(new FileInputStream(settings.getSslKeysPath()), sslPassword);
                 } catch (FileNotFoundException e) {
-                    System.err.println("Wrong file path!");
+                    LOGGER.log(Level.SEVERE, "Wrong file path! {}", settings.getSslKeysPath());
                 }
                 kmf.init(ks, sslPassword);
                 context.init(kmf.getKeyManagers(), null, null);
 
                 factory = context.getServerSocketFactory();
-                return factory.createServerSocket(Settings.ListeningPort);
+                return factory.createServerSocket(settings.getListeningPort());
             }
             else {
-                return new ServerSocket(Settings.ListeningPort);
+                return new ServerSocket(settings.getListeningPort());
             }
         } catch (IOException | NoSuchAlgorithmException | UnrecoverableKeyException | KeyManagementException | KeyStoreException | CertificateException e) {
-            System.err.println("Could not create SSL Socket");
+            LOGGER.log(Level.SEVERE, "Could not create SSL Socket");
         }
 
         return null;

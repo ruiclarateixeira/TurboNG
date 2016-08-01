@@ -10,32 +10,31 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * Created by ruijorgeclarateixeira on 27/09/14.
  * This is the main instance of the server
  * It starts a ConnectionHandler that will receive the incoming connections
  */
 public class TurboNGServer {
+    private static final Logger LOGGER = Logger.getLogger("TurboNG");
+    private final Settings settings;
+
     /**
      * Socket from which the server listens for new client connections.
      */
-    ServerSocket serverSocket;
+    private ServerSocket serverSocket;
 
     /**
-     * TestMain Constructor
+     * Main Constructor
      * @param sslPassword Password to the SSL keystore. Null if no SSL connection needed.
-     * @param propertiesPath Path to the properties file.
+     * @param settings to be used
      */
-    public TurboNGServer(String propertiesPath, char[] sslPassword) {
-        Settings.Load(propertiesPath);
-
-        if(!Settings.validSettings) {
-            return;
-        }
-
+    public TurboNGServer(Settings settings, char[] sslPassword) {
+        this.settings = settings;
         try {
-            this.serverSocket = TurboNGServerSocketFactory.createNGServerSocket(sslPassword);
+            this.serverSocket = TurboNGServerSocketFactory.createNGServerSocket(settings, sslPassword);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,28 +60,28 @@ public class TurboNGServer {
                 if (player == null)
                     throw new RuntimeException("player is null");
             } catch (RuntimeException e) {
-                System.out.println("[StartServer] Invalid player Factory");
+                LOGGER.log(Level.SEVERE, "Invalid player Factory");
                 return;
             }
 
-            if(!Settings.validSettings) {
-                System.err.println("[StartServer] Invalid Settings.");
+            if(!settings.isValid()) {
+                LOGGER.log(Level.SEVERE, "Invalid Settings.");
                 return;
             }
 
             if(serverSocket != null) {
-                System.out.println("[StartServer] Starting game server.");
-                System.out.println("[StartServer] Socket listening on " + serverSocket.getLocalPort());
-                System.out.println("[StartServer] Starting Connection Handler with Thread Pool of size " + Settings.NumberOfThreads);
-                ConnectionHandler.Start(initThreadPool(Settings.NumberOfThreads), serverSocket, playerFactory);
+                LOGGER.log(Level.INFO, "Starting game server.");
+                LOGGER.log(Level.INFO, "Socket listening on " + serverSocket.getLocalPort());
+                LOGGER.log(Level.INFO, "Starting Connection Handler with Thread Pool of size " + settings.getNumberOfThreads());
+                ConnectionHandler.Start(initThreadPool(settings.getNumberOfThreads()), serverSocket, playerFactory);
             }
             else {
-                System.err.println("[StartServer] Socket not created!");
+                LOGGER.log(Level.SEVERE, "Socket not created!");
                 return;
             }
-            System.out.println("[StartServer] Server is running.");
+            LOGGER.log(Level.INFO, "Server is running.");
         } catch (RuntimeException e) {
-            System.out.println("[StartServer] Uncaught exception! Server will stop!" + "\nException Action" + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Uncaught exception! Server will stop!" + "\nException Action" + e.getMessage());
             e.printStackTrace();
         }
     }

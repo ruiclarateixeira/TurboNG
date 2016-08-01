@@ -5,16 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-/**
- * Created by ruijorgeclarateixeira on 10/01/15.
- */
 public class Settings {
-    public static boolean validSettings = false;
-    public static boolean SSL;
-    public static int NumberOfThreads, ListeningPort;
-    public static String SSLKeysPath;
+    private boolean valid = false;
+    private boolean SSL;
+    private int numberOfThreads, listeningPort;
+    private String sslKeysPath;
 
-    public static void Load(String propertiesPath) {
+    public Settings(String propertiesPath) {
         try {
             if(propertiesPath == null)
                 throw new FileNotFoundException();
@@ -22,21 +19,61 @@ public class Settings {
             Properties properties = new Properties();
             FileInputStream in = new FileInputStream(propertiesPath);
             properties.load(in);
-                ListeningPort = Integer.parseInt((String) properties.get("PORT"));
-                NumberOfThreads = Integer.parseInt((String) properties.get("THREADS"));
+            listeningPort = Integer.parseInt((String) properties.get("PORT"));
+            numberOfThreads = Integer.parseInt((String) properties.get("THREADS"));
 
-                SSL = Boolean.parseBoolean((String)properties.get("SSL"));
+            SSL = Boolean.parseBoolean((String)properties.get("SSL"));
 
-                if(SSL)
-                    SSLKeysPath = (String)properties.get("KEYSTORE_PATH");
+            if(SSL)
+                sslKeysPath = (String)properties.get("KEYSTORE_PATH");
             in.close();
-            validSettings = true;
+            valid = true;
         } catch (FileNotFoundException e) {
             System.err.println("File " + propertiesPath + " not found.");
-            validSettings = false;
+            valid = false;
         } catch (IOException e) {
             e.printStackTrace();
-            validSettings = false;
+            valid = false;
         }
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
+
+    public boolean isSSL() {
+        return SSL;
+    }
+
+    public void setSSL(boolean SSL) {
+        this.SSL = SSL;
+    }
+
+    public int getNumberOfThreads() {
+        return numberOfThreads;
+    }
+
+    public void setNumberOfThreads(int numberOfThreads) {
+        this.numberOfThreads = numberOfThreads;
+    }
+
+    public int getListeningPort() {
+        return listeningPort;
+    }
+
+    public void setListeningPort(int listeningPort) {
+        this.listeningPort = listeningPort;
+    }
+
+    public String getSslKeysPath() {
+        return sslKeysPath;
+    }
+
+    public void setSslKeysPath(String sslKeysPath) {
+        this.sslKeysPath = sslKeysPath;
     }
 }
