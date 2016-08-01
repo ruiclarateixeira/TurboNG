@@ -26,7 +26,7 @@ build/*
 
 # Intellij Files
 .idea/
-TurboNGServer.iml
+turbong.iml
 
 # Configuration file
 src/IntegrationTesting/config.properties
