@@ -32,7 +32,7 @@ public class TurboNGServerSocketFactory {
     public static ServerSocket createNGServerSocket(Settings settings, char[] sslPassword) throws IOException {
         SSLServerSocketFactory factory;
         try {
-            if (settings.isSSL()) {
+            if (settings.isSslConnection()) {
                 if(settings.getSslKeysPath() == null || settings.getSslKeysPath().equals("")) {
                     LOGGER.log(Level.SEVERE, "Provide a path to the SSL keystore!");
                     return null;

@@ -64,11 +64,6 @@ public class TurboNGServer {
                 return;
             }
 
-            if(!settings.isValid()) {
-                LOGGER.log(Level.SEVERE, "Invalid Settings.");
-                return;
-            }
-
             if(serverSocket != null) {
                 LOGGER.log(Level.INFO, "Starting game server.");
                 LOGGER.log(Level.INFO, "Socket listening on " + serverSocket.getLocalPort());

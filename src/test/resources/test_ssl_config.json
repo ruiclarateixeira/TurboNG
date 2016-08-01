@@ -1,0 +1,6 @@
+{
+  "listeningPort": 123,
+  "numberOfThreads": 5,
+  "sslConnection": true,
+  "sslKeysPath": "path"
+}
