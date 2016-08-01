@@ -24,8 +24,9 @@ build/*
 # SSL Keystores
 *.keys
 
-# .idea
-.idea
+# Intellij Files
+.idea/
+TurboNGServer.iml
 
 # Configuration file
 src/IntegrationTesting/config.properties
