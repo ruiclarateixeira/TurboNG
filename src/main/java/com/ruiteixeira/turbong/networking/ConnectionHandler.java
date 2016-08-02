@@ -7,10 +7,10 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * Created by ruijorgeclarateixeira on 27/09/14.
- *
  * main.java.main.com.ruiteixeira.turbong.networking.ConnectionHandler
  *
  * This class is given a thread pool and a secure socket to receive connections from.
@@ -18,10 +18,7 @@ import java.util.concurrent.ExecutorService;
  * thread pool.
  */
 public class ConnectionHandler {
-    /**
-     * Current state of the server.
-     */
-    public static boolean serverRunning = true;
+    private static final Logger LOGGER = Logger.getLogger("ConnectionHandler");
 
     /**
      * Starts the connection handler.
@@ -31,25 +28,26 @@ public class ConnectionHandler {
      */
     public static void Start(ExecutorService pool, ServerSocket serverSocket, IPlayerFactory playerFactory) {
         if (pool == null || serverSocket == null || playerFactory == null) {
-            System.err.println("[ConnectionHandler] Couldn't start handler");
+            LOGGER.log(Level.SEVERE, "Couldn't start handler");
             return;
         }
         else if (playerFactory.instantiatePlayer() == null) {
-            System.err.println("[ConnectionHandler] Invalid player Factory");
+            LOGGER.log(Level.SEVERE, "Invalid player Factory");
             return;
         }
 
-        while(serverRunning) {
+        while(true) {
             try {
                 Socket clientSocket = serverSocket.accept(); // BLOCKS EXECUTION
                 PlayerLobby playerLobby = new PlayerLobby(playerFactory);
                 playerLobby.listen(clientSocket);
                 pool.submit(playerLobby);
+            } catch (InterruptedIOException exception) {
+                break; // TODO: Improve on how to stop the server
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Error listening to socket connection", e);
             } catch (RuntimeException e) {
-                e.printStackTrace();
-                System.err.println("Unidentified exception in main.java.main.com.ruiteixeira.turbong.networking.ConnectionHandler. Process will continue.");
+                LOGGER.log(Level.SEVERE, "Unidentified exception. Process will continue.", e);
             }
         }
     }

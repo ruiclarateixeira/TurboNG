@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * This is the main instance of the server
  * It starts a ConnectionHandler that will receive the incoming connections
  */
-public class TurboNGServer {
+class TurboNGServer {
     private static final Logger LOGGER = Logger.getLogger("TurboNG");
     private final Settings settings;
 
@@ -31,7 +31,7 @@ public class TurboNGServer {
      * @param sslPassword Password to the SSL keystore. Null if no SSL connection needed.
      * @param settings to be used
      */
-    public TurboNGServer(Settings settings, char[] sslPassword) {
+    TurboNGServer(Settings settings, char[] sslPassword) {
         this.settings = settings;
         try {
             this.serverSocket = TurboNGServerSocketFactory.createNGServerSocket(settings, sslPassword);
@@ -76,8 +76,7 @@ public class TurboNGServer {
             }
             LOGGER.log(Level.INFO, "Server is running.");
         } catch (RuntimeException e) {
-            LOGGER.log(Level.SEVERE, "Uncaught exception! Server will stop!" + "\nException Action" + e.getMessage());
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Uncaught exception! Server will stop!", e);
         }
     }
 }

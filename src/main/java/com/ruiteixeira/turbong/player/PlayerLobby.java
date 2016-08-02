@@ -5,26 +5,29 @@ import com.ruiteixeira.turbong.Interface.Action;
 import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
 /**
  * Created by ruijorgeclarateixeira on 13/10/14.
  * This class is the main interface between the player class and the client.
  */
 public class PlayerLobby implements Callable<Void> {
+    private static final Logger LOGGER = Logger.getLogger("PlayerLobby");
+
     /**
      * Input from the client.
      */
-    public BufferedReader bufReader = null;
+    private BufferedReader bufReader = null;
 
     /**
      * Output to the client.
      */
-    public BufferedWriter bufWriter = null;
+    private BufferedWriter bufWriter = null;
 
     /**
      * player that is in the lobby
      */
-    Player player;
+    private Player player;
 
     public PlayerLobby(IPlayerFactory playerFactory) {
         if (playerFactory == null) {
@@ -46,7 +49,7 @@ public class PlayerLobby implements Callable<Void> {
     /**
      * Gives interface the socket to listen from.
      * @param socket Socket to listen from.
-     * @throws IOException
+     * @throws IOException if it fails to create reader a writer from the socket
      */
     public void listen(Socket socket) throws IOException {
         bufReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -91,7 +94,7 @@ public class PlayerLobby implements Callable<Void> {
      * Send an action to this lobby's player.
      * @param action Action to be sent.
      */
-    public void sendToPlayer(Action action) {
+    private void sendToPlayer(Action action) {
         if(action != null && action.isValid()) {
             try {
                 player.executeAction(action);
@@ -109,7 +112,7 @@ public class PlayerLobby implements Callable<Void> {
      * Send an action to the client.
      * @param action Action to be sent.
      */
-    public void sendToClient(Action action) {
+    void sendToClient(Action action) {
         try {
             if(action != null && action.isValid()) {
                 bufWriter.write(action.toString());
